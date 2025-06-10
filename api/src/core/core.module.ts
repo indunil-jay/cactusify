@@ -6,6 +6,7 @@ import { ApplicationBootstrapOptions } from 'src/common/interfaces/application-b
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
+import { CqrsModule } from '@nestjs/cqrs';
 
 const ENV = process.env.NODE_ENV;
 
@@ -17,6 +18,7 @@ const ENV = process.env.NODE_ENV;
       load: [appConfig, databaseConfig],
       validationSchema: environmentValidation,
     }),
+    CqrsModule.forRoot(),
   ],
 })
 export class CoreModule {

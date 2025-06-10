@@ -1,29 +1,35 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
-@Entity('user')
+@Entity('users')
 export class UserEntity {
   @PrimaryColumn()
   id: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, length: 96, nullable: false })
   email: string;
 
-  @Column()
+  @Column({ length: 32 })
   firstName: string;
 
-  @Column()
+  @Column({ nullable: true, length: 32 })
   lastName?: string;
 
   @Column()
-  userName?: string;
+  userName: string;
 
-  @Column()
+  @Column({ nullable: true })
   password?: string;
 
-  @Column()
-  dateOfBirth?: string;
+  @Column({ nullable: true })
+  dateOfBirth?: Date;
 
-  @Column()
+  @Column({ nullable: true })
   bio?: string;
 
   // @Column()
@@ -31,4 +37,10 @@ export class UserEntity {
 
   // address: any;
   // role: any;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }

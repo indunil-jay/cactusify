@@ -13,6 +13,7 @@ export class UserFactory {
     bio?: string,
   ) {
     const id = randomUUID();
+    const username = firstName + '_' + `${lastName ? lastName : ''}`;
     const user = new User(id);
     user.email = email;
     user.firstName = firstName;
@@ -20,6 +21,7 @@ export class UserFactory {
     user.password = password;
     user.dataOfBirth = dataOfBirth;
     user.bio = bio;
+    user.userName = username;
 
     return user;
   }
