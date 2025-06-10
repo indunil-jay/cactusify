@@ -5,6 +5,7 @@ import { DatabaseDriver } from 'src/common/enums/database-drivers.enum';
 import { ApplicationBootstrapOptions } from 'src/common/interfaces/application-bootstrap-options.interface';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
+import environmentValidation from './config/environment.validation';
 
 const ENV = process.env.NODE_ENV;
 
@@ -14,6 +15,7 @@ const ENV = process.env.NODE_ENV;
       isGlobal: true,
       envFilePath: ENV ? `.env.${ENV}.local` : `.env`,
       load: [appConfig, databaseConfig],
+      validationSchema: environmentValidation,
     }),
   ],
 })
