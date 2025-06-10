@@ -2,22 +2,12 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/application/users.module';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersInfrastructureModule } from './users/infrastructure/users-infrastructure.module';
 import { ApplicationBootstrapOptions } from './common/interfaces/application-bootstrap-options.interface';
+import { CoreModule } from './core/core.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      port: 5433,
-      username: 'postgres',
-      password: 'mypass1122',
-      database: 'cactusify_db',
-      autoLoadEntities: true,
-      synchronize: true,
-    }),
-  ],
+  imports: [],
   controllers: [AppController],
   providers: [AppService],
 })
@@ -26,6 +16,7 @@ export class AppModule {
     return {
       module: AppModule,
       imports: [
+        CoreModule.forRoot(options),
         UsersModule.withInfrastructure(
           UsersInfrastructureModule.use(options.driver),
         ),
