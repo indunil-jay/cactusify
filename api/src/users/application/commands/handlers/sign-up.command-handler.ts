@@ -1,10 +1,10 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { SignUpCommand } from './sign-up.command';
 import { UserFactory } from 'src/users/domain/factories/user.factory';
 import { UserCreatedEvent } from 'src/users/domain/events/user-created.event';
 import { User } from 'src/users/domain/user';
-import { HashingService } from '../ports/hashing.service';
-import { CreateUserRepository } from '../ports/create-user.repository';
+import { HashingService } from '../../ports/hashing.service';
+import { CreateUserRepository } from '../../ports/create-user.repository';
+import { SignUpCommand } from '../sign-up.command';
 
 @CommandHandler(SignUpCommand)
 export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {

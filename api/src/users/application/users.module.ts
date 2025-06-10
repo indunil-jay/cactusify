@@ -4,10 +4,10 @@ import { UsersController } from '../presenter/http/users.controller';
 import { UserFactory } from '../domain/factories/user.factory';
 import { AuthenticationService } from './authentication.service';
 import { AuthenticationController } from '../presenter/http/authentication.controller';
-import { SignUpCommandHandler } from './commands/sign-up.command-handler';
 import { UserCreatedEventHandler } from './event-handlers/user-created.event-handler';
-import { SignInCommandHandler } from './commands/sign-in.command-handler';
 import { UserLoggedEventHandler } from './event-handlers/user-logged.event-handler';
+import { SignUpCommandHandler } from './commands/handlers/sign-up.command-handler';
+import { SignInCommandHandler } from './commands/handlers/sign-in.command-handler';
 
 @Module({
   controllers: [UsersController, AuthenticationController],

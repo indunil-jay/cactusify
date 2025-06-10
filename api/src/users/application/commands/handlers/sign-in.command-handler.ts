@@ -1,10 +1,11 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-import { SignInCommand } from './sign-in.command';
-import { HashingService } from '../ports/hashing.service';
-import { FindUserRepository } from '../ports/find-user.repository';
-import { UserNotFoundException } from '../exceptions/user-not-found.exception';
-import { InvalidPasswordException } from '../exceptions/invalid-password.exception';
-import { UserLoggedEvent } from '../events/user-logged.event';
+
+import { HashingService } from '../../ports/hashing.service';
+import { FindUserRepository } from '../../ports/find-user.repository';
+import { UserNotFoundException } from '../../exceptions/user-not-found.exception';
+import { InvalidPasswordException } from '../../exceptions/invalid-password.exception';
+import { UserLoggedEvent } from '../../events/user-logged.event';
+import { SignInCommand } from '../sign-in.command';
 
 @CommandHandler(SignInCommand)
 export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
