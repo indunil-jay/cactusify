@@ -6,6 +6,8 @@ import { AuthenticationService } from './authentication.service';
 import { AuthenticationController } from '../presenter/http/authentication.controller';
 import { SignUpCommandHandler } from './commands/sign-up.command-handler';
 import { UserCreatedEventHandler } from './event-handlers/user-created.event-handler';
+import { SignInCommandHandler } from './commands/sign-in.command-handler';
+import { UserLoggedEventHandler } from './event-handlers/user-logged.event-handler';
 
 @Module({
   controllers: [UsersController, AuthenticationController],
@@ -15,6 +17,8 @@ import { UserCreatedEventHandler } from './event-handlers/user-created.event-han
     AuthenticationService,
     SignUpCommandHandler,
     UserCreatedEventHandler,
+    SignInCommandHandler,
+    UserLoggedEventHandler,
   ],
 })
 export class UsersModule {
