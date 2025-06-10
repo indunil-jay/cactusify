@@ -8,7 +8,7 @@ import { UserLoggedEvent } from '../../events/user-logged.event';
 import { SignInCommand } from '../sign-in.command';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
-import jwtConfig from 'src/users/infrastructure/config/jwt.config';
+import jwtConfig from 'src/shared/config/jwt.config';
 import { Inject } from '@nestjs/common';
 
 @CommandHandler(SignInCommand)
