@@ -6,6 +6,7 @@ import { User } from '../domain/user';
 import { RefreshTokenCommand } from './commands/refresh-token.command';
 import { AuthTokensResponse } from './interfaces/auth-tokens-response.interface';
 import { GoogleSignCommand } from './commands/google-sign.command';
+import { TfaGenerateCommand } from './commands/tfa-generate.command';
 
 @Injectable()
 export class AuthenticationFacade {
@@ -22,7 +23,13 @@ export class AuthenticationFacade {
     return this.commandBus.execute(refreshToken);
   }
 
-  googleSign(googleSignCommand: GoogleSignCommand) {
+  googleSign(
+    googleSignCommand: GoogleSignCommand,
+  ): Promise<AuthTokensResponse> {
     return this.commandBus.execute(googleSignCommand);
+  }
+
+  generateTFA(tfaGenerateCommand: TfaGenerateCommand): Promise<string> {
+    return this.commandBus.execute(tfaGenerateCommand);
   }
 }

@@ -10,6 +10,15 @@ export class User {
   public role: 'admin' | 'regular';
   public imageUrl?: string;
   public isEmailVerified: boolean = false;
+  public isTfaEnabled: boolean = false;
+  public tfaSecret?: string;
 
   constructor(public id: string) {}
+
+  public enableTFA() {
+    this.isTfaEnabled = true;
+  }
+  public disableTFA() {
+    this.isTfaEnabled = false;
+  }
 }

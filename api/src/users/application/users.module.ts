@@ -10,6 +10,7 @@ import { SignUpCommandHandler } from './commands/handlers/sign-up.command-handle
 import { SignInCommandHandler } from './commands/handlers/sign-in.command-handler';
 import { RefreshTokenCommandHandler } from './commands/handlers/refresh-token.command-handler';
 import { GoogleSignCommandHandler } from './commands/handlers/google-sign.command-handler';
+import { TfaGenerateCommandHandler } from './commands/handlers/tfa-generate.command-handler';
 
 @Module({
   controllers: [UsersController, AuthenticationController],
@@ -23,6 +24,7 @@ import { GoogleSignCommandHandler } from './commands/handlers/google-sign.comman
     UserLoggedEventHandler,
     RefreshTokenCommandHandler,
     GoogleSignCommandHandler,
+    TfaGenerateCommandHandler,
   ],
   exports: [AuthenticationFacade],
 })

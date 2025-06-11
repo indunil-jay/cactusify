@@ -45,6 +45,12 @@ export class UserEntity {
   @Column()
   isEmailVerified: boolean;
 
+  @Column({ default: false })
+  isTfaEnabled: boolean;
+
+  @Column({ nullable: true })
+  tfaSecret?: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

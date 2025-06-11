@@ -8,11 +8,14 @@ import { AccessTokenGuard } from './guards/authentication/access-token.guard';
 import { RoleGuard } from './guards/authorization/role.guard';
 import googleConfig from './config/google.config';
 
+import tfaConfig from './config/tfa.config';
+
 @Module({
   imports: [
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(googleConfig),
+    ConfigModule.forFeature(tfaConfig),
   ],
   providers: [
     // {
@@ -35,6 +38,7 @@ import googleConfig from './config/google.config';
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
     ConfigModule.forFeature(googleConfig),
+    ConfigModule.forFeature(tfaConfig),
   ],
 })
 export class SharedModule {}

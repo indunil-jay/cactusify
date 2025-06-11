@@ -16,6 +16,8 @@ export class UserMapper {
     user.googleId = userEntity.googleId;
     user.imageUrl = userEntity.imageUrl;
     user.isEmailVerified = userEntity.isEmailVerified;
+    user.isTfaEnabled = userEntity.isTfaEnabled;
+    user.tfaSecret = userEntity.tfaSecret;
     return user;
   }
   static toPersistence(user: User): UserEntity {
@@ -32,6 +34,8 @@ export class UserMapper {
     userEntity.googleId = user.googleId;
     userEntity.imageUrl = user.imageUrl;
     userEntity.isEmailVerified = user.isEmailVerified;
+    // userEntity.isTfaEnabled = user.isTfaEnabled;
+    // userEntity.tfaSecret = user.tfaSecret;
 
     return userEntity;
   }

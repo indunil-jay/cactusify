@@ -1,4 +1,12 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Res,
+} from '@nestjs/common';
 import { SignUpDto } from './dto/sign-up.dto';
 import { AuthenticationFacade } from 'src/users/application/authentication.facade';
 import { SignUpCommand } from 'src/users/application/commands/sign-up.command';
@@ -8,6 +16,11 @@ import { AuthType } from 'src/shared/enums/auth-type.enum';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RefreshTokenCommand } from 'src/users/application/commands/refresh-token.command';
 import { Auth } from 'src/shared/decorators/authentication/auth.decorator';
+import { ActiveUser } from 'src/shared/decorators/authentication/active-user.decorator';
+import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
+import { Response, response } from 'express';
+import { TfaGenerateCommand } from 'src/users/application/commands/tfa-generate.command';
+import { toFileStream } from 'qrcode';
 
 @Auth(AuthType.None)
 @Controller('authentication')
@@ -49,5 +62,19 @@ export class AuthenticationController {
     return this.authenticationFacade.refreshToken(
       new RefreshTokenCommand(refreshTokenDto.refreshToken),
     );
+  }
+
+  @Auth(AuthType.Bearer)
+  @HttpCode(HttpStatus.OK)
+  @Get('2fa/generate')
+  async generateQrCode(
+    @ActiveUser() activeUser: IActiveUser,
+    @Res() response: Response,
+  ) {
+    const uri = await this.authenticationFacade.generateTFA(
+      new TfaGenerateCommand(activeUser.email),
+    );
+    response.type('png');
+    return toFileStream(response, uri);
   }
 }

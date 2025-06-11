@@ -8,6 +8,8 @@ import { IAuthenticationService } from '../application/ports/authentication.serv
 import { AuthenticationService } from './services/authentication.service';
 import { IGoogleAuthenticationService } from '../application/ports/google-authentication.service';
 import { GoogleAuthenticationService } from './services/google-authenication.service';
+import { OtpAuthenticationService } from './services/otp-authentication.service';
+import { IOtpAuthenticationService } from '../application/ports/otp-authentication.service';
 @Module({
   imports: [SharedModule],
   providers: [
@@ -23,12 +25,18 @@ import { GoogleAuthenticationService } from './services/google-authenication.ser
       provide: IGoogleAuthenticationService,
       useClass: GoogleAuthenticationService,
     },
+
+    {
+      provide: IOtpAuthenticationService,
+      useClass: OtpAuthenticationService,
+    },
   ],
   exports: [
     HashingService,
     SharedModule,
     IAuthenticationService,
     IGoogleAuthenticationService,
+    IOtpAuthenticationService,
   ],
 })
 export class UsersInfrastructureModule {
