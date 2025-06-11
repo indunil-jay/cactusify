@@ -6,6 +6,7 @@ export class User {
   public password?: string;
   public dataOfBirth?: Date;
   public bio?: string;
+  public role: 'admin' | 'regular';
 
   constructor(public id: string) {}
 }

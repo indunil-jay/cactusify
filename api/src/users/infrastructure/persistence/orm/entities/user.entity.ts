@@ -1,3 +1,4 @@
+import { Role } from 'src/shared/enums/role.enum';
 import {
   Column,
   CreateDateColumn,
@@ -32,11 +33,13 @@ export class UserEntity {
   @Column({ nullable: true })
   bio?: string;
 
+  @Column({ enum: Role, default: Role.Regular })
+  role: Role;
+
   // @Column()
   // imageUrl: string;
 
   // address: any;
-  // role: any;
 
   @CreateDateColumn()
   createdAt: Date;

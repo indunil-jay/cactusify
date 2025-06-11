@@ -10,6 +10,7 @@ import { RefreshTokensIdsRepository } from 'src/users/application/ports/refresh-
 import { User } from 'src/users/domain/user';
 import { TokenGenerateException } from './exceptions/tokens-generate.exception';
 import { AuthTokensResponse } from 'src/users/application/interfaces/auth-tokens-response.interface';
+import { Role } from 'src/shared/enums/role.enum';
 
 @Injectable()
 export class AuthenticationService implements IAuthenticationService {
@@ -42,7 +43,7 @@ export class AuthenticationService implements IAuthenticationService {
         this.signToken<Partial<IActiveUser>>(
           user.id,
           this.jwtConfiguration.accessTokenTtl,
-          { email: user.email },
+          { email: user.email, role: user.role as Role },
         ),
         this.signToken<Partial<RefreshTokenPayload>>(
           user.id,

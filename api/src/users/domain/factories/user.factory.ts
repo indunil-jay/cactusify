@@ -22,6 +22,7 @@ export class UserFactory {
     user.dataOfBirth = dataOfBirth;
     user.bio = bio;
     user.userName = username;
+    user.role = 'regular';
 
     return user;
   }

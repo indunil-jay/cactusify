@@ -1,5 +1,6 @@
 import { User } from 'src/users/domain/user';
 import { UserEntity } from '../entities/user.entity';
+import { Role } from 'src/shared/enums/role.enum';
 
 export class UserMapper {
   static toDomain(userEntity: UserEntity): User {
@@ -11,7 +12,7 @@ export class UserMapper {
     user.dataOfBirth = userEntity.dateOfBirth;
     user.bio = userEntity.bio;
     user.userName = userEntity.userName;
-
+    user.role = userEntity.role;
     return user;
   }
   static toPersistence(user: User): UserEntity {
@@ -24,6 +25,7 @@ export class UserMapper {
     userEntity.password = user.password;
     userEntity.dateOfBirth = user.dataOfBirth;
     userEntity.bio = user.bio;
+    userEntity.role = user.role as Role;
 
     return userEntity;
   }
