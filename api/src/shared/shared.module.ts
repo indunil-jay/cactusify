@@ -17,12 +17,12 @@ import { AuthenticationGuard } from './guards/authentication.guard';
     //   useClass: AccessTokenGuard,
     // },
 
+    AccessTokenGuard,
+    AuthenticationGuard,
     {
       provide: APP_GUARD,
       useClass: AuthenticationGuard,
     },
-    AccessTokenGuard,
-    AuthenticationGuard,
   ],
   exports: [
     ConfigModule.forFeature(jwtConfig),

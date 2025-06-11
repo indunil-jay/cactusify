@@ -10,6 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigType } from '@nestjs/config';
 import jwtConfig from 'src/shared/config/jwt.config';
 import { Inject } from '@nestjs/common';
+import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
 
 @CommandHandler(SignInCommand)
 export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
@@ -36,7 +37,7 @@ export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
       throw new InvalidPasswordException();
     }
     const accessToken = await this.jwtService.signAsync(
-      { sub: user.id, email: user.email },
+      { sub: user.id, email: user.email } as IActiveUser,
       {
         secret: this.jwtConfiguration.secret,
         audience: this.jwtConfiguration.audience,

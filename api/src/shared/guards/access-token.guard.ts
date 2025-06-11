@@ -33,8 +33,10 @@ export class AccessTokenGuard implements CanActivate {
         token,
         this.jwtConfiguration,
       );
+
       request[REQUEST_USER_KEY] = payload;
-    } catch {
+    } catch (error) {
+      console.log({ error });
       throw new InvalidJWTException();
     }
     return true;
@@ -42,7 +44,7 @@ export class AccessTokenGuard implements CanActivate {
 
   // strategy -> Bearer Token
   private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
+    const [_, token] = request.headers.authorization?.split(' ') ?? [];
+    return token;
   }
 }
