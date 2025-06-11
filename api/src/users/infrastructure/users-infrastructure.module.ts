@@ -4,6 +4,8 @@ import { InMemoryUsersPersistenceModule } from './persistence/in-memory/in-memeo
 import { HashingService } from '../application/ports/hashing.service';
 import { BcryptService } from './services/bcrypt.service';
 import { SharedModule } from 'src/shared/shared.module';
+import { IAuthenticationService } from '../application/ports/authentication.service';
+import { AuthenticationService } from './services/authentication.service';
 @Module({
   imports: [SharedModule],
   providers: [
@@ -11,8 +13,12 @@ import { SharedModule } from 'src/shared/shared.module';
       provide: HashingService,
       useClass: BcryptService,
     },
+    {
+      provide: IAuthenticationService,
+      useClass: AuthenticationService,
+    },
   ],
-  exports: [HashingService, SharedModule],
+  exports: [HashingService, SharedModule, IAuthenticationService],
 })
 export class UsersInfrastructureModule {
   static use(driver: 'orm' | 'in-memory') {

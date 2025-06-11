@@ -1,16 +1,11 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
-
 import { HashingService } from '../../ports/hashing.service';
 import { FindUserRepository } from '../../ports/find-user.repository';
 import { UserNotFoundException } from '../../exceptions/user-not-found.exception';
 import { InvalidPasswordException } from '../../exceptions/invalid-password.exception';
 import { UserLoggedEvent } from '../../events/user-logged.event';
 import { SignInCommand } from '../sign-in.command';
-import { JwtService } from '@nestjs/jwt';
-import { ConfigType } from '@nestjs/config';
-import jwtConfig from 'src/shared/config/jwt.config';
-import { Inject } from '@nestjs/common';
-import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
+import { IAuthenticationService } from '../../ports/authentication.service';
 
 @CommandHandler(SignInCommand)
 export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
@@ -18,9 +13,7 @@ export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
     private readonly hashingService: HashingService,
     private readonly usersRepository: FindUserRepository,
     private readonly eventBus: EventBus,
-    private readonly jwtService: JwtService,
-    @Inject(jwtConfig.KEY)
-    private readonly jwtConfiguration: ConfigType<typeof jwtConfig>,
+    private readonly authenticationService: IAuthenticationService,
   ) {}
   async execute(command: SignInCommand): Promise<any> {
     //check user exist
@@ -36,17 +29,9 @@ export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
     if (!isEqual) {
       throw new InvalidPasswordException();
     }
-    const accessToken = await this.jwtService.signAsync(
-      { sub: user.id, email: user.email } as IActiveUser,
-      {
-        secret: this.jwtConfiguration.secret,
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-        expiresIn: this.jwtConfiguration.accessTokenTtl,
-      },
-    );
-
+    const [accessToken, refreshToken] =
+      await this.authenticationService.generateTokens(user);
     this.eventBus.publish(new UserLoggedEvent(user.email));
-    return { accessToken };
+    return { accessToken, refreshToken };
   }
 }
