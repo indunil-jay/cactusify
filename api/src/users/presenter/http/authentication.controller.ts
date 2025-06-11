@@ -12,7 +12,10 @@ import { SignUpCommand } from 'src/users/application/commands/sign-up.command';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignInCommand } from 'src/users/application/commands/sign-in.command';
 import { Response } from 'express';
+import { Auth } from 'src/shared/decorators/auth.decorator';
+import { AuthType } from 'src/shared/enums/auth-type.enum';
 
+@Auth(AuthType.None)
 @Controller('authentication')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
