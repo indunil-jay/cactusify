@@ -12,11 +12,11 @@ import { Auth } from 'src/shared/decorators/authentication/auth.decorator';
 @Auth(AuthType.None)
 @Controller('authentication')
 export class AuthenticationController {
-  constructor(private readonly authenticationService: AuthenticationFacade) {}
+  constructor(private readonly authenticationFacade: AuthenticationFacade) {}
 
   @Post('sign-up')
   signup(@Body() { email, password, firstName, lastName }: SignUpDto) {
-    return this.authenticationService.signup(
+    return this.authenticationFacade.signup(
       new SignUpCommand(email, firstName, password, lastName),
     );
   }
@@ -24,9 +24,7 @@ export class AuthenticationController {
   @HttpCode(HttpStatus.OK)
   @Post('sign-in')
   signin(@Body() { email, password }: SignInDto) {
-    return this.authenticationService.signin(
-      new SignInCommand(email, password),
-    );
+    return this.authenticationFacade.signin(new SignInCommand(email, password));
   }
   // @HttpCode(HttpStatus.OK)
   // @Post('sign-in')
@@ -34,7 +32,7 @@ export class AuthenticationController {
   //   @Res({ passthrough: true }) response: Response,
   //   @Body() { email, password }: SignInDto,
   // ) {
-  //   const { accessToken } = await this.authenticationService.signin(
+  //   const { accessToken } = await this.authenticationFacade.signin(
   //     new SignInCommand(email, password),
   //   );
 
@@ -48,7 +46,7 @@ export class AuthenticationController {
   @HttpCode(HttpStatus.OK)
   @Post('refresh-tokens')
   refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
-    return this.authenticationService.refreshToken(
+    return this.authenticationFacade.refreshToken(
       new RefreshTokenCommand(refreshTokenDto.refreshToken),
     );
   }

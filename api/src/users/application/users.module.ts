@@ -22,6 +22,7 @@ import { RefreshTokenCommandHandler } from './commands/handlers/refresh-token.co
     UserLoggedEventHandler,
     RefreshTokenCommandHandler,
   ],
+  exports: [AuthenticationFacade],
 })
 export class UsersModule {
   static withInfrastructure(infrastructureModule: DynamicModule | Type) {

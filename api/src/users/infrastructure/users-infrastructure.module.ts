@@ -6,6 +6,8 @@ import { BcryptService } from './services/bcrypt.service';
 import { SharedModule } from 'src/shared/shared.module';
 import { IAuthenticationService } from '../application/ports/authentication.service';
 import { AuthenticationService } from './services/authentication.service';
+import { IGoogleAuthenticationService } from '../application/ports/google-authentication.service';
+import { GoogleAuthenticationService } from './services/google-authenication.service';
 @Module({
   imports: [SharedModule],
   providers: [
@@ -17,8 +19,17 @@ import { AuthenticationService } from './services/authentication.service';
       provide: IAuthenticationService,
       useClass: AuthenticationService,
     },
+    {
+      provide: IGoogleAuthenticationService,
+      useClass: GoogleAuthenticationService,
+    },
   ],
-  exports: [HashingService, SharedModule, IAuthenticationService],
+  exports: [
+    HashingService,
+    SharedModule,
+    IAuthenticationService,
+    IGoogleAuthenticationService,
+  ],
 })
 export class UsersInfrastructureModule {
   static use(driver: 'orm' | 'in-memory') {

@@ -5,6 +5,7 @@ import { SignInCommand } from './commands/sign-in.command';
 import { User } from '../domain/user';
 import { RefreshTokenCommand } from './commands/refresh-token.command';
 import { AuthTokensResponse } from './interfaces/auth-tokens-response.interface';
+import { GoogleSignCommand } from './commands/google-sign.command';
 
 @Injectable()
 export class AuthenticationFacade {
@@ -19,5 +20,9 @@ export class AuthenticationFacade {
 
   refreshToken(refreshToken: RefreshTokenCommand): Promise<AuthTokensResponse> {
     return this.commandBus.execute(refreshToken);
+  }
+
+  googleSign(googleSignCommand: GoogleSignCommand) {
+    return this.commandBus.execute(googleSignCommand);
   }
 }

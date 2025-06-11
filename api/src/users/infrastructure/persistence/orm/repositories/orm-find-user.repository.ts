@@ -14,7 +14,7 @@ export class OrmFindUserRepository implements FindUserRepository {
     private readonly usersRepository: Repository<UserEntity>,
   ) {}
   async findOne(
-    options: Partial<Pick<User, 'id' | 'email'>>,
+    options: Partial<Pick<User, 'id' | 'email' | 'googleId'>>,
   ): Promise<User | null> {
     try {
       const userEntity = await this.usersRepository.findOneBy({

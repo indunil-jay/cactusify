@@ -4,6 +4,7 @@ export class User {
   public userName: string;
   public lastName?: string;
   public password?: string;
+  public googleId?: string;
   public dataOfBirth?: Date;
   public bio?: string;
   public role: 'admin' | 'regular';

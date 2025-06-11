@@ -6,11 +6,13 @@ import jwtConfig from './config/jwt.config';
 import { AuthenticationGuard } from './guards/authentication/authentication.guard';
 import { AccessTokenGuard } from './guards/authentication/access-token.guard';
 import { RoleGuard } from './guards/authorization/role.guard';
+import googleConfig from './config/google.config';
 
 @Module({
   imports: [
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
+    ConfigModule.forFeature(googleConfig),
   ],
   providers: [
     // {
@@ -32,6 +34,7 @@ import { RoleGuard } from './guards/authorization/role.guard';
   exports: [
     ConfigModule.forFeature(jwtConfig),
     JwtModule.registerAsync(jwtConfig.asProvider()),
+    ConfigModule.forFeature(googleConfig),
   ],
 })
 export class SharedModule {}

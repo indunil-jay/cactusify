@@ -6,10 +6,11 @@ import { UsersInfrastructureModule } from './users/infrastructure/users-infrastr
 import { ApplicationBootstrapOptions } from './common/interfaces/application-bootstrap-options.interface';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { GoogleAuthenticationController } from './users/presenter/http/google-authentication.controller';
 
 @Module({
   imports: [SharedModule],
-  controllers: [AppController],
+  controllers: [AppController, GoogleAuthenticationController],
   providers: [AppService],
 })
 export class AppModule {

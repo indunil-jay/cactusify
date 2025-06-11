@@ -8,6 +8,7 @@ export class UserFactory {
     email: string,
     firstName: string,
     password?: string,
+    googleId?: string,
     lastName?: string,
     dataOfBirth?: Date,
     bio?: string,
@@ -23,6 +24,7 @@ export class UserFactory {
     user.bio = bio;
     user.userName = username;
     user.role = 'regular';
+    user.googleId = googleId;
 
     return user;
   }

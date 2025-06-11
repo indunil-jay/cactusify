@@ -36,11 +36,13 @@ export class UserEntity {
   @Column({ enum: Role, default: Role.Regular })
   role: Role;
 
+  @Column({ nullable: true })
+  googleId?: string;
+
   // @Column()
   // imageUrl: string;
 
   // address: any;
-
   @CreateDateColumn()
   createdAt: Date;
 

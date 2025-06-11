@@ -13,6 +13,7 @@ export class UserMapper {
     user.bio = userEntity.bio;
     user.userName = userEntity.userName;
     user.role = userEntity.role;
+    user.googleId = userEntity.googleId;
     return user;
   }
   static toPersistence(user: User): UserEntity {
@@ -26,6 +27,7 @@ export class UserMapper {
     userEntity.dateOfBirth = user.dataOfBirth;
     userEntity.bio = user.bio;
     userEntity.role = user.role as Role;
+    userEntity.googleId = user.googleId;
 
     return userEntity;
   }
