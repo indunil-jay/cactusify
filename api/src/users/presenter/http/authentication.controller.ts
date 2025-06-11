@@ -36,8 +36,10 @@ export class AuthenticationController {
 
   @HttpCode(HttpStatus.OK)
   @Post('sign-in')
-  signin(@Body() { email, password }: SignInDto) {
-    return this.authenticationFacade.signin(new SignInCommand(email, password));
+  signin(@Body() { email, password, tfaCode }: SignInDto) {
+    return this.authenticationFacade.signin(
+      new SignInCommand(email, password, tfaCode),
+    );
   }
   // @HttpCode(HttpStatus.OK)
   // @Post('sign-in')

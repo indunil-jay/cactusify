@@ -1,6 +1,8 @@
 import {
   IsEmail,
   IsNotEmpty,
+  IsNumberString,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -26,4 +28,8 @@ export class SignInDto {
       'Password must include at least 1 letter, 1 number, and 1 special character.',
   })
   password: string;
+
+  @IsOptional()
+  @IsNumberString()
+  tfaCode?: string;
 }

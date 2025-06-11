@@ -7,6 +7,8 @@ import { UserLoggedEvent } from '../../events/user-logged.event';
 import { SignInCommand } from '../sign-in.command';
 import { IAuthenticationService } from '../../ports/authentication.service';
 import { AuthTokensResponse } from '../../interfaces/auth-tokens-response.interface';
+import { IOtpAuthenticationService } from '../../ports/otp-authentication.service';
+import { InvalidTfaCodeException } from '../../exceptions/invalid-tfa-code.exception';
 
 @CommandHandler(SignInCommand)
 export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
@@ -15,6 +17,7 @@ export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
     private readonly usersRepository: FindUserRepository,
     private readonly eventBus: EventBus,
     private readonly authenticationService: IAuthenticationService,
+    private readonly otpAuthenticationService: IOtpAuthenticationService,
   ) {}
   async execute(command: SignInCommand): Promise<AuthTokensResponse> {
     //check user exist
@@ -29,6 +32,16 @@ export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
     );
     if (!isEqual) {
       throw new InvalidPasswordException();
+    }
+    if (user.isTfaEnabled) {
+      const isValid = this.otpAuthenticationService.verifyCode(
+        command.tfaCode!,
+        user.tfaSecret!,
+      );
+
+      if (!isValid) {
+        throw new InvalidTfaCodeException();
+      }
     }
     const { accessToken, refreshToken } =
       await this.authenticationService.generateTokens(user);
