@@ -12,6 +12,8 @@ export class UserFactory {
     lastName?: string,
     dataOfBirth?: Date,
     bio?: string,
+    imageUrl?: string,
+    isEmailVerified?: boolean,
   ) {
     const id = randomUUID();
     const username = firstName + '_' + `${lastName ? lastName : ''}`;
@@ -25,6 +27,10 @@ export class UserFactory {
     user.userName = username;
     user.role = 'regular';
     user.googleId = googleId;
+    user.imageUrl = imageUrl;
+    user.isEmailVerified = isEmailVerified
+      ? isEmailVerified
+      : user.isEmailVerified;
 
     return user;
   }

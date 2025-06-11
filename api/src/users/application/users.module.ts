@@ -9,6 +9,7 @@ import { UserLoggedEventHandler } from './event-handlers/user-logged.event-handl
 import { SignUpCommandHandler } from './commands/handlers/sign-up.command-handler';
 import { SignInCommandHandler } from './commands/handlers/sign-in.command-handler';
 import { RefreshTokenCommandHandler } from './commands/handlers/refresh-token.command-handler';
+import { GoogleSignCommandHandler } from './commands/handlers/google-sign.command-handler';
 
 @Module({
   controllers: [UsersController, AuthenticationController],
@@ -21,6 +22,7 @@ import { RefreshTokenCommandHandler } from './commands/handlers/refresh-token.co
     SignInCommandHandler,
     UserLoggedEventHandler,
     RefreshTokenCommandHandler,
+    GoogleSignCommandHandler,
   ],
   exports: [AuthenticationFacade],
 })

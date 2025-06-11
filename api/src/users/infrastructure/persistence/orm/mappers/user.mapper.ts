@@ -14,6 +14,8 @@ export class UserMapper {
     user.userName = userEntity.userName;
     user.role = userEntity.role;
     user.googleId = userEntity.googleId;
+    user.imageUrl = userEntity.imageUrl;
+    user.isEmailVerified = userEntity.isEmailVerified;
     return user;
   }
   static toPersistence(user: User): UserEntity {
@@ -28,6 +30,8 @@ export class UserMapper {
     userEntity.bio = user.bio;
     userEntity.role = user.role as Role;
     userEntity.googleId = user.googleId;
+    userEntity.imageUrl = user.imageUrl;
+    userEntity.isEmailVerified = user.isEmailVerified;
 
     return userEntity;
   }

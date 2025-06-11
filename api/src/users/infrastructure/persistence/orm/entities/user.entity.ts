@@ -39,10 +39,12 @@ export class UserEntity {
   @Column({ nullable: true })
   googleId?: string;
 
-  // @Column()
-  // imageUrl: string;
+  @Column({ nullable: true })
+  imageUrl?: string;
 
-  // address: any;
+  @Column()
+  isEmailVerified: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

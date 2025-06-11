@@ -7,6 +7,7 @@ import {
 import { ConfigType } from '@nestjs/config';
 import { OAuth2Client } from 'google-auth-library';
 import googleConfig from 'src/shared/config/google.config';
+import { GoogleSignPayload } from 'src/users/application/interfaces/google-sign-payload.interface';
 import { IGoogleAuthenticationService } from 'src/users/application/ports/google-authentication.service';
 
 @Injectable()
@@ -23,9 +24,7 @@ export class GoogleAuthenticationService
     const clientSecret = this.googleConfiguration.clientSecret;
     this.oauthClient = new OAuth2Client(clientId, clientSecret);
   }
-  async autenticate(
-    token: string,
-  ): Promise<{ email: string; googleId: string; name: string }> {
+  async autenticate(token: string): Promise<GoogleSignPayload> {
     try {
       // verify the google token sent by user
       const loginTicket = await this.oauthClient.verifyIdToken({
@@ -35,13 +34,19 @@ export class GoogleAuthenticationService
       const {
         email,
         sub: googleId,
-        name,
-        given_name,
-        family_name,
-      } = loginTicket.getPayload()!;
+        given_name: firstName,
+        family_name: lastName,
 
-      console.log({ given_name, family_name, name });
-      return { email: email as string, googleId, name: name as string };
+        picture: imageUrl,
+      } = loginTicket.getPayload()!;
+      return {
+        googleId,
+        email: email as string,
+        firstName: firstName as string,
+        lastName: lastName as string,
+
+        imageUrl: imageUrl,
+      };
     } catch {
       throw new UnauthorizedException();
     }

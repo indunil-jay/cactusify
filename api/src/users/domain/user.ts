@@ -8,6 +8,8 @@ export class User {
   public dataOfBirth?: Date;
   public bio?: string;
   public role: 'admin' | 'regular';
+  public imageUrl?: string;
+  public isEmailVerified: boolean = false;
 
   constructor(public id: string) {}
 }
