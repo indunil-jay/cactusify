@@ -1,12 +1,17 @@
+import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { RefreshTokenCommand } from '../refresh-token.command';
 import { ConfigType } from '@nestjs/config';
-import jwtConfig from 'src/shared/config/jwt.config';
-import { Inject, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { RefreshTokenCommand } from '../refresh-token.command';
+import jwtConfig from 'src/shared/config/jwt.config';
 import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
 import { FindUserRepository } from '../../ports/find-user.repository';
 import { IAuthenticationService } from '../../ports/authentication.service';
+import { RefreshTokenPayload } from '../../interfaces/refresh-token-payload.interface';
+import { RefreshTokensIdsRepository } from '../../ports/refresh-token-ids.repository';
+import { UserNotFoundException } from '../../exceptions/user-not-found.exception';
+import { InvalidRefreshTokenException } from '../../exceptions/invalid-refresh-token.exception';
+import { AuthTokensResponse } from '../../interfaces/auth-tokens-response.interface';
 
 @CommandHandler(RefreshTokenCommand)
 export class RefreshTokenCommandHandler
@@ -18,26 +23,34 @@ export class RefreshTokenCommandHandler
     private readonly jwtService: JwtService,
     private readonly usersRepository: FindUserRepository,
     private readonly authenticationService: IAuthenticationService,
+    private readonly refreshTokenIdsRepository: RefreshTokensIdsRepository,
   ) {}
-  async execute({ token }: RefreshTokenCommand): Promise<{
-    accessToken: string;
-    refreshToken: string;
-  }> {
-    try {
-      const { sub } = await this.jwtService.verifyAsync<
-        Pick<IActiveUser, 'sub'>
-      >(token, {
-        secret: this.jwtConfiguration.secret,
-        audience: this.jwtConfiguration.audience,
-        issuer: this.jwtConfiguration.issuer,
-      });
+  async execute({ token }: RefreshTokenCommand): Promise<AuthTokensResponse> {
+    const { sub, refreshTokenId } = await this.jwtService.verifyAsync<
+      Pick<IActiveUser, 'sub'> & RefreshTokenPayload
+    >(token, {
+      secret: this.jwtConfiguration.secret,
+      audience: this.jwtConfiguration.audience,
+      issuer: this.jwtConfiguration.issuer,
+    });
 
-      const user = await this.usersRepository.findOne({ id: sub });
-      const [accessToken, refreshToken] =
-        await this.authenticationService.generateTokens(user!);
-      return { accessToken, refreshToken };
-    } catch {
-      throw new UnauthorizedException();
+    const user = await this.usersRepository.findOne({ id: sub });
+
+    if (!user) {
+      throw new UserNotFoundException();
     }
+
+    const isValid = await this.refreshTokenIdsRepository.validate(
+      user.id,
+      refreshTokenId,
+    );
+
+    if (isValid) {
+      await this.refreshTokenIdsRepository.invalidate(user.id);
+    } else {
+      throw new InvalidRefreshTokenException();
+    }
+
+    return await this.authenticationService.generateTokens(user);
   }
 }

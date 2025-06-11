@@ -6,6 +6,7 @@ import { InvalidPasswordException } from '../../exceptions/invalid-password.exce
 import { UserLoggedEvent } from '../../events/user-logged.event';
 import { SignInCommand } from '../sign-in.command';
 import { IAuthenticationService } from '../../ports/authentication.service';
+import { AuthTokensResponse } from '../../interfaces/auth-tokens-response.interface';
 
 @CommandHandler(SignInCommand)
 export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
@@ -15,7 +16,7 @@ export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
     private readonly eventBus: EventBus,
     private readonly authenticationService: IAuthenticationService,
   ) {}
-  async execute(command: SignInCommand): Promise<any> {
+  async execute(command: SignInCommand): Promise<AuthTokensResponse> {
     //check user exist
     const user = await this.usersRepository.findOne({ email: command.email });
     if (!user) {
@@ -29,7 +30,7 @@ export class SignInCommandHandler implements ICommandHandler<SignInCommand> {
     if (!isEqual) {
       throw new InvalidPasswordException();
     }
-    const [accessToken, refreshToken] =
+    const { accessToken, refreshToken } =
       await this.authenticationService.generateTokens(user);
     this.eventBus.publish(new UserLoggedEvent(user.email));
     return { accessToken, refreshToken };

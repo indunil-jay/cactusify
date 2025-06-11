@@ -6,5 +6,7 @@ export abstract class IAuthenticationService {
     expiresIn: number,
     payload?: T,
   ): Promise<string>;
-  abstract generateTokens(user: User): Promise<[string, string]>;
+  abstract generateTokens(
+    user: User,
+  ): Promise<{ accessToken: string; refreshToken: string }>;
 }
