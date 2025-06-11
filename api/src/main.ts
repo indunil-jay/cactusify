@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DatabaseDriver } from './common/enums/database-drivers.enum';
 import { ValidationPipe } from '@nestjs/common';
+import { DataResponseInterceptor } from './shared/interceptors/data-response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(

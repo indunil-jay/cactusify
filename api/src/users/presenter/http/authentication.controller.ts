@@ -1,11 +1,13 @@
 import {
   Body,
+  ClassSerializerInterceptor,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
   Post,
   Res,
+  UseInterceptors,
 } from '@nestjs/common';
 import { SignUpDto } from './dto/sign-up.dto';
 import { AuthenticationFacade } from 'src/users/application/authentication.facade';
@@ -18,7 +20,7 @@ import { RefreshTokenCommand } from 'src/users/application/commands/refresh-toke
 import { Auth } from 'src/shared/decorators/authentication/auth.decorator';
 import { ActiveUser } from 'src/shared/decorators/authentication/active-user.decorator';
 import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
-import { Response, response } from 'express';
+import { Response } from 'express';
 import { TfaGenerateCommand } from 'src/users/application/commands/tfa-generate.command';
 import { toFileStream } from 'qrcode';
 

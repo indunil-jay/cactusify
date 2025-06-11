@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Role } from 'src/shared/enums/role.enum';
 import {
   Column,
@@ -24,6 +25,7 @@ export class UserEntity {
   @Column()
   userName: string;
 
+  @Exclude()
   @Column({ nullable: true })
   password?: string;
 
@@ -42,7 +44,6 @@ export class UserEntity {
   @Column({ nullable: true })
   imageUrl?: string;
 
-  @Column()
   isEmailVerified: boolean;
 
   @Column({ default: false })

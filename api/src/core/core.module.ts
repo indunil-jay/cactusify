@@ -7,6 +7,8 @@ import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
 import { CqrsModule } from '@nestjs/cqrs';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { DataResponseInterceptor } from 'src/shared/interceptors/data-response.interceptor';
 
 const ENV = process.env.NODE_ENV;
 
@@ -19,6 +21,12 @@ const ENV = process.env.NODE_ENV;
       validationSchema: environmentValidation,
     }),
     CqrsModule.forRoot(),
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: DataResponseInterceptor,
+    },
   ],
 })
 export class CoreModule {
