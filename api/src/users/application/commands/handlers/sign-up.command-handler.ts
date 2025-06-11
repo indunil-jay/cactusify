@@ -26,6 +26,7 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
       email,
       firstName,
       hashedPassword,
+      undefined,
       lastName,
     );
     const newUser = await this.usersRepository.save(user);

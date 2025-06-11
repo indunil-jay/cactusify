@@ -45,6 +45,7 @@ export class GoogleSignCommandHandler
         imageUrl,
         true,
       );
+
       const savedUser = await this.createUserRepository.save(newUser);
       const { accessToken, refreshToken } =
         await this.authenticationService.generateTokens(savedUser);
