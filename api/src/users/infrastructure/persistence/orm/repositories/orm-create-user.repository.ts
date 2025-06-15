@@ -16,11 +16,7 @@ export class OrmCreateUserRepository implements CreateUserRepository {
   async save(user: User): Promise<User> {
     try {
       const entity = UserMapper.toPersistence(user);
-      await this.usersRepository.insert(entity);
-      const userEntity = await this.usersRepository.findOneByOrFail({
-        id: entity.id,
-      });
-
+      const userEntity = await this.usersRepository.save(entity);
       return UserMapper.toDomain(userEntity);
     } catch (err) {
       const pgUniqueViolationErrorCode = '23505';
