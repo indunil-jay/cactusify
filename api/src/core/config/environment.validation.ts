@@ -31,4 +31,8 @@ export default Joi.object({
   AWS_CLOUDFRONT_URL: Joi.string().required(),
   AWS_USER_ACCESS_KEY: Joi.string().required(),
   AWS_USER_SECRET_KEY: Joi.string().required(),
+  MAIL_HOST: Joi.string().required(),
+  SMPT_USERNAME: Joi.string().required(),
+  SMPT_PASSWORD: Joi.string().required(),
+  SMPT_PORT: Joi.number().port().default(2525),
 });
