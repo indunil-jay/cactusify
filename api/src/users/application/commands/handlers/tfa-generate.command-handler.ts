@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { TfaGenerateCommand } from '../tfa-generate.command';
-import { IOtpAuthenticationService } from '../../ports/otp-authentication.service';
+import { IOtpAuthenticationService } from '../../ports/services/otp-authentication.service';
 
 @CommandHandler(TfaGenerateCommand)
 export class TfaGenerateCommandHandler

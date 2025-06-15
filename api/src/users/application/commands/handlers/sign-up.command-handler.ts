@@ -2,8 +2,8 @@ import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { UserFactory } from 'src/users/domain/factories/user.factory';
 import { UserCreatedEvent } from 'src/users/domain/events/user-created.event';
 import { User } from 'src/users/domain/user';
-import { HashingService } from '../../ports/hashing.service';
-import { CreateUserRepository } from '../../ports/create-user.repository';
+import { HashingService } from '../../ports/services/hashing.service';
+import { CreateUserRepository } from '../../ports/repositories/create-user.repository';
 import { SignUpCommand } from '../sign-up.command';
 
 @CommandHandler(SignUpCommand)
@@ -29,6 +29,7 @@ export class SignUpCommandHandler implements ICommandHandler<SignUpCommand> {
       undefined,
       lastName,
     );
+
     const newUser = await this.usersRepository.save(user);
     await this.eventBus.publish(new UserCreatedEvent(newUser));
     return newUser;

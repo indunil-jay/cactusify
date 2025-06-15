@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { RefreshTokensIdsRepository } from 'src/users/application/ports/refresh-token-ids.repository';
+import { RefreshTokensIdsRepository } from 'src/users/application/ports/repositories/refresh-token-ids.repository';
 import { RefreshTokenIdsEntity } from '../entities/refresh-token-ids.entity';
 import { DatabaseExeception } from '../../exceptions/common.database.exception';
 

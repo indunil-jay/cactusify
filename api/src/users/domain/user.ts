@@ -1,3 +1,5 @@
+import { ProfilePicture } from './value-objects/profile-picture.vobject';
+
 export class User {
   public email: string;
   public firstName: string;
@@ -5,13 +7,13 @@ export class User {
   public lastName?: string;
   public password?: string;
   public googleId?: string;
-  public dataOfBirth?: Date;
+  public dateOfBirth?: Date;
   public bio?: string;
   public role: 'admin' | 'regular';
-  public imageUrl?: string;
   public isEmailVerified: boolean = false;
   public isTfaEnabled: boolean = false;
   public tfaSecret?: string;
+  public profilePicture?: ProfilePicture;
 
   constructor(public id: string) {}
 

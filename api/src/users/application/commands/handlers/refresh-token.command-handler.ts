@@ -3,15 +3,15 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { RefreshTokenCommand } from '../refresh-token.command';
-import jwtConfig from 'src/shared/config/jwt.config';
-import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
-import { FindUserRepository } from '../../ports/find-user.repository';
-import { IAuthenticationService } from '../../ports/authentication.service';
+import jwtConfig from 'src/shared/infrastructure/config/jwt.config';
+import { FindUserRepository } from '../../ports/repositories/find-user.repository';
+import { IAuthenticationService } from '../../ports/services/authentication.service';
 import { RefreshTokenPayload } from '../../interfaces/refresh-token-payload.interface';
-import { RefreshTokensIdsRepository } from '../../ports/refresh-token-ids.repository';
+import { RefreshTokensIdsRepository } from '../../ports/repositories/refresh-token-ids.repository';
 import { UserNotFoundException } from '../../exceptions/user-not-found.exception';
 import { InvalidRefreshTokenException } from '../../exceptions/invalid-refresh-token.exception';
 import { AuthTokensResponse } from '../../interfaces/auth-tokens-response.interface';
+import { IActiveUser } from 'src/shared/application/interfaces/active-user.interface';
 
 @CommandHandler(RefreshTokenCommand)
 export class RefreshTokenCommandHandler

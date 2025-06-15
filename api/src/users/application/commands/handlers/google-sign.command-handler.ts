@@ -1,12 +1,13 @@
 import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { GoogleSignCommand } from '../google-sign.command';
-import { IGoogleAuthenticationService } from '../../ports/google-authentication.service';
-import { FindUserRepository } from '../../ports/find-user.repository';
-import { CreateUserRepository } from '../../ports/create-user.repository';
-import { IAuthenticationService } from '../../ports/authentication.service';
+import { FindUserRepository } from '../../ports/repositories/find-user.repository';
+import { CreateUserRepository } from '../../ports/repositories/create-user.repository';
+import { IAuthenticationService } from '../../ports/services/authentication.service';
 import { UserFactory } from 'src/users/domain/factories/user.factory';
 import { UserCreatedEvent } from 'src/users/domain/events/user-created.event';
 import { AuthTokensResponse } from '../../interfaces/auth-tokens-response.interface';
+import { ProfilePicture } from 'src/users/domain/value-objects/profile-picture.vobject';
+import { IGoogleAuthenticationService } from '../../ports/services/google-authentication.service';
 
 @CommandHandler(GoogleSignCommand)
 export class GoogleSignCommandHandler
@@ -41,10 +42,11 @@ export class GoogleSignCommandHandler
         googleId,
         lastName,
         undefined,
-        undefined,
-        imageUrl,
         true,
       );
+      if (imageUrl) {
+        newUser.profilePicture = new ProfilePicture(imageUrl);
+      }
 
       const savedUser = await this.createUserRepository.save(newUser);
       const { accessToken, refreshToken } =

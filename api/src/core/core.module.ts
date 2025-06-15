@@ -8,7 +8,8 @@ import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
 import { CqrsModule } from '@nestjs/cqrs';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { DataResponseInterceptor } from 'src/shared/interceptors/data-response.interceptor';
+import { DataResponseInterceptor } from 'src/shared/application/interceptors/data-response.interceptor';
+import awsConfig from './config/aws.config';
 
 const ENV = process.env.NODE_ENV;
 
@@ -17,7 +18,7 @@ const ENV = process.env.NODE_ENV;
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ENV ? `.env.${ENV}.local` : `.env`,
-      load: [appConfig, databaseConfig],
+      load: [appConfig, databaseConfig, awsConfig],
       validationSchema: environmentValidation,
     }),
     CqrsModule.forRoot(),

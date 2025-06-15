@@ -1,12 +1,14 @@
 import { Exclude } from 'class-transformer';
-import { Role } from 'src/shared/enums/role.enum';
+import { Role } from 'src/shared/application/enums/role.enum';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { UserProfilePictureEntity } from './user-profile-picture.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -25,7 +27,6 @@ export class UserEntity {
   @Column()
   userName: string;
 
-  @Exclude()
   @Column({ nullable: true })
   password?: string;
 
@@ -41,9 +42,7 @@ export class UserEntity {
   @Column({ nullable: true })
   googleId?: string;
 
-  @Column({ nullable: true })
-  imageUrl?: string;
-
+  @Column()
   isEmailVerified: boolean;
 
   @Column({ default: false })
@@ -57,4 +56,15 @@ export class UserEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  // Relations
+  @OneToOne(
+    () => UserProfilePictureEntity,
+    (userProfilePicture) => userProfilePicture.user,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  profilePicture?: UserProfilePictureEntity;
 }

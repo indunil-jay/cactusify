@@ -6,9 +6,10 @@ import {
 } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { OAuth2Client } from 'google-auth-library';
-import googleConfig from 'src/shared/config/google.config';
+import googleConfig from 'src/shared/infrastructure/config/google.config';
 import { GoogleSignPayload } from 'src/users/application/interfaces/google-sign-payload.interface';
-import { IGoogleAuthenticationService } from 'src/users/application/ports/google-authentication.service';
+import { IGoogleAuthenticationService } from 'src/users/application/ports/services/google-authentication.service';
+
 
 @Injectable()
 export class GoogleAuthenticationService

@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateUserRepository } from 'src/users/application/ports/create-user.repository';
+import { CreateUserRepository } from 'src/users/application/ports/repositories/create-user.repository';
 import { User } from 'src/users/domain/user';
 import { UserEntity } from '../entities/user.entity';
 import { Repository } from 'typeorm';
@@ -20,6 +20,7 @@ export class OrmCreateUserRepository implements CreateUserRepository {
       const userEntity = await this.usersRepository.findOneByOrFail({
         id: entity.id,
       });
+
       return UserMapper.toDomain(userEntity);
     } catch (err) {
       const pgUniqueViolationErrorCode = '23505';

@@ -1,10 +1,13 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindUserRepository } from 'src/users/application/ports/find-user.repository';
+import { Repository } from 'typeorm';
+import {
+  Filter,
+  FindUserRepository,
+} from 'src/users/application/ports/repositories/find-user.repository';
 import { User } from 'src/users/domain/user';
 import { UserEntity } from '../entities/user.entity';
-import { Repository } from 'typeorm';
 import { UserMapper } from '../mappers/user.mapper';
-import { Injectable } from '@nestjs/common';
 import { DatabaseExeception } from '../../exceptions/common.database.exception';
 
 @Injectable()
@@ -13,13 +16,12 @@ export class OrmFindUserRepository implements FindUserRepository {
     @InjectRepository(UserEntity)
     private readonly usersRepository: Repository<UserEntity>,
   ) {}
-  async findOne(
-    options: Partial<Pick<User, 'id' | 'email' | 'googleId'>>,
-  ): Promise<User | null> {
+  async findOne(filter: Filter): Promise<User | null> {
     try {
-      const userEntity = await this.usersRepository.findOneBy({
-        ...options,
+      const userEntity = await this.usersRepository.findOne({
+        where: { ...filter },
       });
+
       if (!userEntity) return null;
       return UserMapper.toDomain(userEntity);
     } catch (error) {

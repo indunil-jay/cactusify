@@ -2,15 +2,15 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { randomUUID } from 'crypto';
-import jwtConfig from 'src/shared/config/jwt.config';
-import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
+import jwtConfig from 'src/shared/infrastructure/config/jwt.config';
 import { RefreshTokenPayload } from 'src/users/application/interfaces/refresh-token-payload.interface';
-import { IAuthenticationService } from 'src/users/application/ports/authentication.service';
-import { RefreshTokensIdsRepository } from 'src/users/application/ports/refresh-token-ids.repository';
+import { IAuthenticationService } from 'src/users/application/ports/services/authentication.service';
+import { RefreshTokensIdsRepository } from 'src/users/application/ports/repositories/refresh-token-ids.repository';
 import { User } from 'src/users/domain/user';
 import { TokenGenerateException } from './exceptions/tokens-generate.exception';
 import { AuthTokensResponse } from 'src/users/application/interfaces/auth-tokens-response.interface';
-import { Role } from 'src/shared/enums/role.enum';
+import { Role } from 'src/shared/application/enums/role.enum';
+import { IActiveUser } from 'src/shared/application/interfaces/active-user.interface';
 
 @Injectable()
 export class AuthenticationService implements IAuthenticationService {

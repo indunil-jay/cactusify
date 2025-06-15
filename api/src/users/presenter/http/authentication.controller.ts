@@ -14,15 +14,15 @@ import { AuthenticationFacade } from 'src/users/application/authentication.facad
 import { SignUpCommand } from 'src/users/application/commands/sign-up.command';
 import { SignInDto } from './dto/sign-in.dto';
 import { SignInCommand } from 'src/users/application/commands/sign-in.command';
-import { AuthType } from 'src/shared/enums/auth-type.enum';
+import { AuthType } from 'src/shared/application/enums/auth-type.enum';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RefreshTokenCommand } from 'src/users/application/commands/refresh-token.command';
-import { Auth } from 'src/shared/decorators/authentication/auth.decorator';
-import { ActiveUser } from 'src/shared/decorators/authentication/active-user.decorator';
-import { IActiveUser } from 'src/shared/interfaces/active-user.interface';
+import { Auth } from 'src/shared/application/decorators/authentication/auth.decorator';
+import { ActiveUser } from 'src/shared/application/decorators/authentication/active-user.decorator';
 import { Response } from 'express';
 import { TfaGenerateCommand } from 'src/users/application/commands/tfa-generate.command';
 import { toFileStream } from 'qrcode';
+import { IActiveUser } from 'src/shared/application/interfaces/active-user.interface';
 
 @Auth(AuthType.None)
 @Controller('authentication')

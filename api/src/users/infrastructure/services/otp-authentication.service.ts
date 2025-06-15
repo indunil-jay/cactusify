@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import { authenticator } from 'otplib';
-import tfaConfig from 'src/shared/config/tfa.config';
+import tfaConfig from 'src/shared/infrastructure/config/tfa.config';
 import { UserNotFoundException } from 'src/users/application/exceptions/user-not-found.exception';
-import { FindUserRepository } from 'src/users/application/ports/find-user.repository';
-import { IOtpAuthenticationService } from 'src/users/application/ports/otp-authentication.service';
-import { UpdateUserRepository } from 'src/users/application/ports/update-user.repository';
+import { FindUserRepository } from 'src/users/application/ports/repositories/find-user.repository';
+import { IOtpAuthenticationService } from 'src/users/application/ports/services/otp-authentication.service';
+import { UpdateUserRepository } from 'src/users/application/ports/repositories/update-user.repository';
 
 @Injectable()
 export class OtpAuthenticationService implements IOtpAuthenticationService {
@@ -29,6 +29,7 @@ export class OtpAuthenticationService implements IOtpAuthenticationService {
   async enableTfaForUser(email: string, secret: string): Promise<void> {
     const user = await this.findUserRepository.findOne({ email });
     if (!user) throw new UserNotFoundException();
+
     await this.updateUserRepository.update(user.id, {
       tfaSecret: secret,
       isTfaEnabled: true,
