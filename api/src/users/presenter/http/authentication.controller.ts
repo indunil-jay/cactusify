@@ -1,13 +1,12 @@
 import {
   Body,
-  ClassSerializerInterceptor,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
   Post,
   Res,
-  UseInterceptors,
+
 } from '@nestjs/common';
 import { SignUpDto } from './dto/sign-up.dto';
 import { AuthenticationFacade } from 'src/users/application/authentication.facade';
@@ -23,7 +22,9 @@ import { Response } from 'express';
 import { TfaGenerateCommand } from 'src/users/application/commands/tfa-generate.command';
 import { toFileStream } from 'qrcode';
 import { IActiveUser } from 'src/shared/application/interfaces/active-user.interface';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('authentication')
 @Auth(AuthType.None)
 @Controller('authentication')
 export class AuthenticationController {

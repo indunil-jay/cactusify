@@ -4,7 +4,9 @@ import { AuthType } from 'src/shared/application/enums/auth-type.enum';
 import { GoogleTokenDto } from './dto/google-token.dto';
 import { GoogleSignCommand } from 'src/users/application/commands/google-sign.command';
 import { AuthenticationFacade } from 'src/users/application/authentication.facade';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('authentication')
 @Auth(AuthType.None)
 @Controller('authentication/google')
 export class GoogleAuthenticationController {

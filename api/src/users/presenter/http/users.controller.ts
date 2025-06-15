@@ -14,7 +14,9 @@ import { UpdateProfilePictureCommand } from 'src/users/application/commands/upda
 import { UsersFacade } from 'src/users/application/users.facade';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserCommand } from 'src/users/application/commands/update-user.command';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersFacade) {}
