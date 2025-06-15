@@ -19,7 +19,7 @@ import { ProfilePicture } from 'src/users/domain/value-objects/profile-picture.v
 import { UpdateUserRepository } from '../../ports/repositories/update-user.repository';
 import { UserUpdatedEvent } from 'src/users/domain/events/user-updated.event';
 import { User } from 'src/users/domain/user';
-import { FindUserRepository } from '../../ports/repositories/find-user.repository';
+
 
 @CommandHandler(UpdateProfilePictureCommand)
 export class UpdateProfilePictureCommandHandler
@@ -29,7 +29,6 @@ export class UpdateProfilePictureCommandHandler
     private readonly uploadService: UploadService,
     private readonly eventBus: EventBus,
     private readonly updateUsersRepository: UpdateUserRepository,
-    private readonly findUsersRepository: FindUserRepository,
     @Inject(awsConfig.KEY)
     private readonly awsConfiguration: ConfigType<typeof awsConfig>,
   ) {}

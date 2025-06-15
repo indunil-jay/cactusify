@@ -13,6 +13,7 @@ import { GoogleSignCommandHandler } from './commands/handlers/google-sign.comman
 import { TfaGenerateCommandHandler } from './commands/handlers/tfa-generate.command-handler';
 import { UpdateProfilePictureCommandHandler } from './commands/handlers/update-profile-picture.command-handler';
 import { UserUpdatedEventHandler } from './event-handlers/user-updated.event-handler';
+import { UpdateUserCommandHandler } from './commands/handlers/update-profile.command-handler';
 
 @Module({
   controllers: [UsersController, AuthenticationController],
@@ -29,6 +30,7 @@ import { UserUpdatedEventHandler } from './event-handlers/user-updated.event-han
     TfaGenerateCommandHandler,
     UpdateProfilePictureCommandHandler,
     UserUpdatedEventHandler,
+    UpdateUserCommandHandler,
   ],
   exports: [AuthenticationFacade],
 })

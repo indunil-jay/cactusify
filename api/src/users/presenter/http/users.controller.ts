@@ -1,5 +1,7 @@
 import {
+  Body,
   Controller,
+  Patch,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -10,6 +12,8 @@ import { ActiveUser } from 'src/shared/application/decorators/authentication/act
 import { IActiveUser } from 'src/shared/application/interfaces/active-user.interface';
 import { UpdateProfilePictureCommand } from 'src/users/application/commands/update-profile-picture.command';
 import { UsersFacade } from 'src/users/application/users.facade';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UpdateUserCommand } from 'src/users/application/commands/update-user.command';
 
 @Controller('users')
 export class UsersController {
@@ -24,6 +28,26 @@ export class UsersController {
   ) {
     return this.usersService.updateProfilePicture(
       new UpdateProfilePictureCommand(file, user.sub),
+    );
+  }
+  @UseInterceptors(FileInterceptor('file'))
+  @Patch('/me/profile')
+  updateProfile(
+    @Body() updateUserDto: UpdateUserDto,
+    @ActiveUser() user: IActiveUser,
+    @UploadedFile() file?: Express.Multer.File,
+  ) {
+    return this.usersService.updateUser(
+      new UpdateUserCommand(
+        user.sub,
+        updateUserDto.firstName,
+        updateUserDto.lastName,
+        updateUserDto.userName,
+        updateUserDto.bio,
+        updateUserDto.dateOfBirth
+          ? new Date(updateUserDto.dateOfBirth)
+          : undefined,
+      ),
     );
   }
 }
