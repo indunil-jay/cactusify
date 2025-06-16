@@ -9,6 +9,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { UserProfilePictureEntity } from './user-profile-picture.entity';
+import { UserAddressEntity } from './user-address.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -67,4 +68,10 @@ export class UserEntity {
     },
   )
   profilePicture?: UserProfilePictureEntity;
+
+  @OneToOne(() => UserAddressEntity, (userAddress) => userAddress.user, {
+    cascade: true,
+    eager: true,
+  })
+  address: UserAddressEntity;
 }

@@ -10,6 +10,7 @@ import { IUploadedFilePayload } from 'src/shared/application/interfaces/uploaded
 import { FileTypes } from 'src/shared/application/enums/file-types.enum';
 import { ProfilePicture } from 'src/users/domain/value-objects/profile-picture.vobject';
 import { UserUpdatedEvent } from 'src/users/domain/events/user-updated.event';
+import { UserAddress } from 'src/users/domain/value-objects/user-address.vobject';
 
 @CommandHandler(UpdateUserCommand)
 export class UpdateUserCommandHandler
@@ -30,8 +31,11 @@ export class UpdateUserCommandHandler
     firstName,
     lastName,
     userName,
+    address,
   }: UpdateUserCommand): Promise<User> {
     let profilePicture: ProfilePicture | undefined = undefined;
+    let userAddress: UserAddress | undefined = undefined;
+
     if (file) {
       // //upload to the aws
       const name = await this.uploadService.uploadFile(file);
@@ -53,6 +57,15 @@ export class UpdateUserCommandHandler
       profilePicture.type = uploaded.type;
     }
 
+    if (address) {
+      userAddress = new UserAddress();
+      userAddress.addressLine1 = address.addressLine1;
+      userAddress.addressLine2 = address.addressLine2;
+      userAddress.city = address.city;
+      userAddress.state = address.state;
+      userAddress.zipCode = address.zipCode;
+    }
+
     //add database entry
     const user = await this.updateUsersRepository.update(userId, {
       firstName,
@@ -61,6 +74,7 @@ export class UpdateUserCommandHandler
       dateOfBirth,
       userName,
       profilePicture,
+      address: userAddress,
     });
 
     this.eventBus.publish(new UserUpdatedEvent(user));

@@ -1,4 +1,5 @@
 import { ProfilePicture } from './value-objects/profile-picture.vobject';
+import { UserAddress } from './value-objects/user-address.vobject';
 
 export class User {
   public email: string;
@@ -14,13 +15,7 @@ export class User {
   public isTfaEnabled: boolean = false;
   public tfaSecret?: string;
   public profilePicture?: ProfilePicture;
+  public address?: UserAddress;
 
-  constructor(public id: string) {}
-
-  public enableTFA() {
-    this.isTfaEnabled = true;
-  }
-  public disableTFA() {
-    this.isTfaEnabled = false;
-  }
+  constructor(public readonly id: string) {}
 }

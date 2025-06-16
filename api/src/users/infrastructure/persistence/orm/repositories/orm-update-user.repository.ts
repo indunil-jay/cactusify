@@ -7,6 +7,7 @@ import { Repository } from 'typeorm';
 import { UserMapper } from '../mappers/user.mapper';
 import { DatabaseExeception } from '../../exceptions/common.database.exception';
 import { UserProfilePictureEntity } from '../entities/user-profile-picture.entity';
+import { UserAddressEntity } from '../entities/user-address.entity';
 
 @Injectable()
 export class OrmUpdateUserRepository implements UpdateUserRepository {
@@ -59,6 +60,27 @@ export class OrmUpdateUserRepository implements UpdateUserRepository {
           newPicture.type = user.profilePicture.type;
 
           existingUser.profilePicture = newPicture;
+        }
+      }
+      //update address
+      if (user.address) {
+        if (existingUser.address) {
+          //update address
+          existingUser.address.addressLine1 = user.address.addressLine1;
+          existingUser.address.addressLine2 = user.address.addressLine2;
+          existingUser.address.city = user.address.city;
+          existingUser.address.state = user.address.state;
+          existingUser.address.zipCode = user.address.zipCode;
+        } else {
+          // Add new address
+          const newAddress = new UserAddressEntity();
+          newAddress.addressLine1 = user.address.addressLine1;
+          newAddress.addressLine2 = user.address.addressLine2;
+          newAddress.city = user.address.city;
+          newAddress.state = user.address.state;
+          newAddress.zipCode = user.address.zipCode;
+
+          existingUser.address = newAddress;
         }
       }
 

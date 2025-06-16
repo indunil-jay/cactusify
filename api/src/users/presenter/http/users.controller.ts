@@ -15,6 +15,7 @@ import { UsersFacade } from 'src/users/application/users.facade';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserCommand } from 'src/users/application/commands/update-user.command';
 import { ApiTags } from '@nestjs/swagger';
+import { CreateAddressCommand } from 'src/users/application/commands/create-address.command';
 
 @ApiTags('user')
 @Controller('users')
@@ -48,6 +49,16 @@ export class UsersController {
         updateUserDto.bio,
         updateUserDto.dateOfBirth
           ? new Date(updateUserDto.dateOfBirth)
+          : undefined,
+        file,
+        updateUserDto.address
+          ? new CreateAddressCommand(
+              updateUserDto.address.addressLine1,
+              updateUserDto.address.state,
+              updateUserDto.address.city,
+              updateUserDto.address.zipCode,
+              updateUserDto.address.addressLine2,
+            )
           : undefined,
       ),
     );

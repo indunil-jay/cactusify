@@ -11,6 +11,7 @@ import { OrmRefreshTokensIdsRepository } from './repositories/orm-refresh-token-
 import { UpdateUserRepository } from 'src/users/application/ports/repositories/update-user.repository';
 import { OrmUpdateUserRepository } from './repositories/orm-update-user.repository';
 import { UserProfilePictureEntity } from './entities/user-profile-picture.entity';
+import { UserAddressEntity } from './entities/user-address.entity';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { UserProfilePictureEntity } from './entities/user-profile-picture.entity
       UserEntity,
       RefreshTokenIdsEntity,
       UserProfilePictureEntity,
+      UserAddressEntity
     ]),
   ],
   providers: [
