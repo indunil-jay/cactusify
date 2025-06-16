@@ -1,5 +1,5 @@
 import { User } from '../user';
 
 export class UserUpdatedEvent {
-  constructor(user: User) {}
+  constructor(public readonly user: User) {}
 }

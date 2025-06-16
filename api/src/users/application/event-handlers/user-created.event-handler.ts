@@ -8,7 +8,9 @@ export class UserCreatedEventHandler
   implements IEventHandler<UserCreatedEvent>
 {
   private readonly logger = new Logger(UserCreatedEventHandler.name);
+  
   constructor(private readonly emailService: EmailService) {}
+
   handle(event: UserCreatedEvent) {
     this.logger.debug(`"User Created" event :${JSON.stringify(event)}`);
     this.emailService.sendWelcome(event.user);

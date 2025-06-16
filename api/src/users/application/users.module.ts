@@ -14,9 +14,14 @@ import { TfaGenerateCommandHandler } from './commands/handlers/tfa-generate.comm
 import { UpdateProfilePictureCommandHandler } from './commands/handlers/update-profile-picture.command-handler';
 import { UserUpdatedEventHandler } from './event-handlers/user-updated.event-handler';
 import { UpdateUserCommandHandler } from './commands/handlers/update-profile.command-handler';
+import { GoogleAuthenticationController } from '../presenter/http/google-authentication.controller';
 
 @Module({
-  controllers: [UsersController, AuthenticationController],
+  controllers: [
+    UsersController,
+    AuthenticationController,
+    GoogleAuthenticationController,
+  ],
   providers: [
     UsersFacade,
     UserFactory,

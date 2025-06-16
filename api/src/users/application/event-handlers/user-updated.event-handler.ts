@@ -7,6 +7,7 @@ export class UserUpdatedEventHandler
   implements IEventHandler<UserUpdatedEvent>
 {
   private readonly logger = new Logger(UserUpdatedEventHandler.name);
+
   handle(event: UserUpdatedEvent) {
     this.logger.debug(`"User Updated" event :${JSON.stringify(event)}`);
   }
