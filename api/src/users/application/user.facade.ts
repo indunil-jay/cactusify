@@ -3,9 +3,10 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UpdateProfilePictureCommand } from './commands/update-profile-picture.command';
 import { User } from '../domain/user';
 import { UpdateUserCommand } from './commands/update-user.command';
+import { ChangePasswordCommand } from './commands/change-password.command';
 
 @Injectable()
-export class UsersFacade {
+export class UserFacade {
   constructor(private readonly commandBus: CommandBus) {}
 
   updateProfilePicture(
@@ -16,5 +17,9 @@ export class UsersFacade {
 
   updateUser(updateUserCommand: UpdateUserCommand) {
     return this.commandBus.execute(updateUserCommand);
+  }
+
+  changePassword(changePasswordCommand:ChangePasswordCommand){
+    return this.commandBus.execute(changePasswordCommand);
   }
 }

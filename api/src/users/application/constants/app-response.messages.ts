@@ -6,3 +6,6 @@ export const RESET_PASSWORD_EMAIL_SENT = `A password reset link has been sent to
 
 
 export const RESET_PASSWORD_SUCCESS_MESSAGE = `Your password has been successfully reset. You can now log in with your new password.`;
+
+
+export const PASSWORD_CHANGED_SUCCESS_MESSAGE = `Your password has been changed successfully.`;

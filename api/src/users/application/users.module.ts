@@ -1,5 +1,5 @@
 import { DynamicModule, Module, Type } from '@nestjs/common';
-import { UsersFacade } from './users.facade';
+import { UserFacade } from './user.facade';
 import { UsersController } from '../presenter/http/users.controller';
 import { UserFactory } from '../domain/factories/user.factory';
 import { AuthenticationFacade } from './authentication.facade';
@@ -20,6 +20,8 @@ import { ForgotPasswordCommandHandler } from './commands/handlers/forgot-passwor
 import { ForgotPasswordEventHandler } from './event-handlers/forgot-password.event-handler';
 import { PasswordResetEventHandler } from './event-handlers/password-reset.event-handler';
 import { ResetPasswordCommandHandler } from './commands/handlers/reset-password.command-handler';
+import { ChangePasswordCommandHandler } from './commands/handlers/change-password.command-handler';
+import { UserPasswordChangedEventHandler } from './event-handlers/user-password-changed.event-handler';
 
 @Module({
   controllers: [
@@ -28,7 +30,7 @@ import { ResetPasswordCommandHandler } from './commands/handlers/reset-password.
     GoogleAuthenticationController,
   ],
   providers: [
-    UsersFacade,
+    UserFacade,
     UserFactory,
     AuthenticationFacade,
     SignUpCommandHandler,
@@ -46,6 +48,8 @@ import { ResetPasswordCommandHandler } from './commands/handlers/reset-password.
     ForgotPasswordEventHandler,
     ResetPasswordCommandHandler,
     PasswordResetEventHandler,
+    ChangePasswordCommandHandler,
+    UserPasswordChangedEventHandler
   ],
   exports: [AuthenticationFacade],
 })

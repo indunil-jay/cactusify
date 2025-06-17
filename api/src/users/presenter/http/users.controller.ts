@@ -11,16 +11,18 @@ import { Express } from 'express';
 import { ActiveUser } from 'src/shared/application/decorators/authentication/active-user.decorator';
 import { IActiveUser } from 'src/shared/application/interfaces/active-user.interface';
 import { UpdateProfilePictureCommand } from 'src/users/application/commands/update-profile-picture.command';
-import { UsersFacade } from 'src/users/application/users.facade';
+import { UserFacade } from 'src/users/application/user.facade';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserCommand } from 'src/users/application/commands/update-user.command';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateAddressCommand } from 'src/users/application/commands/create-address.command';
+import { ChangePasswordDto } from './dto/change-password.dto';
+import { ChangePasswordCommand } from 'src/users/application/commands/change-password.command';
 
 @ApiTags('user')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersFacade) {}
+  constructor(private readonly userFacade: UserFacade) {}
 
   // @ApiHeaders([{ name: 'Content-Type', description: 'multipart/form-data' }])
   @UseInterceptors(FileInterceptor('imageFile'))
@@ -29,10 +31,11 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
     @ActiveUser() user: IActiveUser,
   ) {
-    return this.usersService.updateProfilePicture(
+    return this.userFacade.updateProfilePicture(
       new UpdateProfilePictureCommand(file, user.sub),
     );
   }
+
   @UseInterceptors(FileInterceptor('file'))
   @Patch('/me/profile')
   updateProfile(
@@ -40,7 +43,7 @@ export class UsersController {
     @ActiveUser() user: IActiveUser,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.usersService.updateUser(
+    return this.userFacade.updateUser(
       new UpdateUserCommand(
         user.sub,
         updateUserDto.firstName,
@@ -60,6 +63,20 @@ export class UsersController {
               updateUserDto.address.addressLine2,
             )
           : undefined,
+      ),
+    );
+  }
+
+  @Post('/me/change-password')
+  changePassword(
+    @Body() changePassword: ChangePasswordDto,
+    @ActiveUser() user: IActiveUser,
+  ) {
+    return this.userFacade.changePassword(
+      new ChangePasswordCommand(
+        user.sub,
+        changePassword.oldPassword,
+        changePassword.newPassword,
       ),
     );
   }
