@@ -7,4 +7,5 @@ export abstract class EmailService {
     user: User,
     resetPasswordToken: ResetPasswordToken,
   ): Promise<void>;
+  abstract sendPasswordResetSuccess(user: User): Promise<void>;
 }

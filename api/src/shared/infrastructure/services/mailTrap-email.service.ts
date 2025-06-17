@@ -13,7 +13,7 @@ export class MailTrapEmailService implements EmailService {
     user: User,
     resetPasswordToken: ResetPasswordToken,
   ): Promise<void> {
-    const resetLink = `http://localhost:3000/authentication/reset-password?${resetPasswordToken.token}`;
+    const resetLink = `http://localhost:3000/authentication/reset-password?token=${resetPasswordToken.token}`;
     try {
       await this.mailerService.sendMail({
         to: user.email,
@@ -40,6 +40,21 @@ export class MailTrapEmailService implements EmailService {
       });
     } catch (error) {
       throw new EmailSendFailedException('sendWelcome', error);
+    }
+  }
+  async sendPasswordResetSuccess(user: User): Promise<void> {
+    try {
+      await this.mailerService.sendMail({
+        to: user.email,
+        from: `Support Team <support@cactusify.online@gmail.com>`,
+        subject: `Password Reset Success 🌵`,
+        template: `./password-reset-success`,
+        context: {
+          userName: user.userName,
+        },
+      });
+    } catch (error) {
+      throw new EmailSendFailedException('sendPasswordResetSuccess', error);
     }
   }
 }

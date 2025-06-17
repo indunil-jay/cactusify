@@ -9,6 +9,7 @@ import { GoogleSignCommand } from './commands/google-sign.command';
 import { TfaGenerateCommand } from './commands/tfa-generate.command';
 import { ForgotPasswordCommand } from './commands/forgot-password.command';
 import { AppResponse } from 'src/shared/application/types/app-response';
+import { ResetPasswordCommand } from './commands/reset-password.command';
 
 @Injectable()
 export class AuthenticationFacade {
@@ -39,5 +40,11 @@ export class AuthenticationFacade {
     forgotPassswordCommand: ForgotPasswordCommand,
   ): Promise<AppResponse> {
     return this.commandBus.execute(forgotPassswordCommand);
+  }
+
+  resetPassword(
+    resetPasswordCommand: ResetPasswordCommand,
+  ): Promise<AppResponse> {
+    return this.commandBus.execute(resetPasswordCommand);
   }
 }

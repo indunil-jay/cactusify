@@ -12,9 +12,8 @@ import {
   RESET_PASSWORD_EMAIL_SENT,
   RESET_PASSWORD_NOT_EXPIRED_MESSAGE,
 } from '../../constants/app-response.messages';
-import { ResetPasswordEmailSentEvent } from '../../events/reset-password-email-sent.event';
-
-export const NOW = new Date();
+import { NOW } from '../../constants/constant-values';
+import { ForgotPasswordEvent } from '../../events/forgot-password.event';
 
 @CommandHandler(ForgotPasswordCommand)
 export class ForgotPasswordCommandHandler
@@ -39,7 +38,7 @@ export class ForgotPasswordCommandHandler
 
     //check  if already token relsease and not expired
     const existintResetToken =
-      await this.findPasswordResetTokenRepository.findOne(user.id);
+      await this.findPasswordResetTokenRepository.findOne({ userId: user.id });
 
     if (existintResetToken) {
       if (existintResetToken.expiresAt > NOW) {
@@ -63,9 +62,7 @@ export class ForgotPasswordCommandHandler
       await this.createPasswordResetTokenRepository.save(resetPasswordToken);
 
     //send email
-    this.eventBus.publish(
-      new ResetPasswordEmailSentEvent(user, newResetPasswordToken),
-    );
+    this.eventBus.publish(new ForgotPasswordEvent(user, newResetPasswordToken));
     return new AppResponse(RESET_PASSWORD_EMAIL_SENT);
   }
 }

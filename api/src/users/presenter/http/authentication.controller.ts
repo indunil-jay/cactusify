@@ -5,6 +5,7 @@ import {
   HttpCode,
   HttpStatus,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
 import { SignUpDto } from './dto/sign-up.dto';
@@ -24,6 +25,8 @@ import { IActiveUser } from 'src/shared/application/interfaces/active-user.inter
 import { ApiTags } from '@nestjs/swagger';
 import { ForgotPassWordDto } from './dto/forgot-password.dto';
 import { ForgotPasswordCommand } from 'src/users/application/commands/forgot-password.command';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ResetPasswordCommand } from 'src/users/application/commands/reset-password.command';
 
 @ApiTags('authentication')
 @Auth(AuthType.None)
@@ -89,6 +92,17 @@ export class AuthenticationController {
   forgotPassword(@Body() forgotPasswordDto: ForgotPassWordDto) {
     return this.authenticationFacade.forgotPassword(
       new ForgotPasswordCommand(forgotPasswordDto.email),
+    );
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('reset-password')
+  resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+    @Query('token') token: string,
+  ) {
+    return this.authenticationFacade.resetPassword(
+      new ResetPasswordCommand(token, resetPasswordDto.password),
     );
   }
 }

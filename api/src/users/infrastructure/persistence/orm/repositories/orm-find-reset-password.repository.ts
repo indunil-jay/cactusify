@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindResetPasswordTokenRepository } from 'src/users/application/ports/repositories/find-reset-password-token.repository';
+import { Filter, FindResetPasswordTokenRepository } from 'src/users/application/ports/repositories/find-reset-password-token.repository';
 import { ResetPasswordToken } from 'src/users/domain/reset-password-token';
 import { PasswordResetTokenEntity } from '../entities/reset-password.entity';
 import { Repository } from 'typeorm';
@@ -13,10 +13,10 @@ export class OrmFindResetPasswordTokenRepository
     @InjectRepository(PasswordResetTokenEntity)
     private readonly passwordResetTokensRepository: Repository<PasswordResetTokenEntity>,
   ) {}
-  async findOne(userId: string): Promise<ResetPasswordToken | null> {
+  async  findOne(options: Filter): Promise<ResetPasswordToken | null> {
     try {
       const resetToken = await this.passwordResetTokensRepository.findOne({
-        where: { userId },
+        where: { ...options },
       });
 
       if (!resetToken) return null;
