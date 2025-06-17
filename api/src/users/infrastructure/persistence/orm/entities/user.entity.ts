@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { UserProfilePictureEntity } from './user-profile-picture.entity';
 import { UserAddressEntity } from './user-address.entity';
+import { PasswordResetTokenEntity } from './reset-password.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -74,4 +75,9 @@ export class UserEntity {
     eager: true,
   })
   address: UserAddressEntity;
+
+  @OneToOne(() => PasswordResetTokenEntity, (token) => token.user, {
+    cascade: ['remove'],
+  })
+  resetToken?: PasswordResetTokenEntity;
 }

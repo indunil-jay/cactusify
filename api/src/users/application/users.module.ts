@@ -15,6 +15,9 @@ import { UpdateProfilePictureCommandHandler } from './commands/handlers/update-p
 import { UserUpdatedEventHandler } from './event-handlers/user-updated.event-handler';
 import { UpdateUserCommandHandler } from './commands/handlers/update-profile.command-handler';
 import { GoogleAuthenticationController } from '../presenter/http/google-authentication.controller';
+import { ResetPasswordTokenFactory } from '../domain/factories/reset-password-token.factory';
+import { ForgotPasswordCommandHandler } from './commands/handlers/forgot-password.command-handler';
+import { ResetPasswordEmailSentEventHandler } from './event-handlers/reset-password-email-sent.event-handler';
 
 @Module({
   controllers: [
@@ -36,6 +39,9 @@ import { GoogleAuthenticationController } from '../presenter/http/google-authent
     UpdateProfilePictureCommandHandler,
     UserUpdatedEventHandler,
     UpdateUserCommandHandler,
+    ResetPasswordTokenFactory,
+    ForgotPasswordCommandHandler,
+    ResetPasswordEmailSentEventHandler,
   ],
   exports: [AuthenticationFacade],
 })

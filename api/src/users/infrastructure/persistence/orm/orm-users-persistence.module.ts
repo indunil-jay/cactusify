@@ -12,6 +12,13 @@ import { UpdateUserRepository } from 'src/users/application/ports/repositories/u
 import { OrmUpdateUserRepository } from './repositories/orm-update-user.repository';
 import { UserProfilePictureEntity } from './entities/user-profile-picture.entity';
 import { UserAddressEntity } from './entities/user-address.entity';
+import { PasswordResetTokenEntity } from './entities/reset-password.entity';
+import { FindResetPasswordTokensRepository } from 'src/users/application/ports/repositories/find-reset-password-tokens.repository';
+import { OrmFindResetPasswordTokenRepository } from './repositories/orm-find-reset-password.repository';
+import { DeleteResetPasswordTokensRepository } from 'src/users/application/ports/repositories/delete-reset-password-tokens.repository';
+import { OrmDeleteResetPasswordTokensRepository } from './repositories/orm-delete-reset-password-tokens.repository';
+import { CreateResetPasswordTokensRepository } from 'src/users/application/ports/repositories/create-reset-password-tokens.repository';
+import { OrmCreateResetPasswordTokensRepository } from './repositories/orm-create-reset-password-tokens.repository';
 
 @Module({
   imports: [
@@ -19,7 +26,8 @@ import { UserAddressEntity } from './entities/user-address.entity';
       UserEntity,
       RefreshTokenIdsEntity,
       UserProfilePictureEntity,
-      UserAddressEntity
+      UserAddressEntity,
+      PasswordResetTokenEntity,
     ]),
   ],
   providers: [
@@ -40,12 +48,28 @@ import { UserAddressEntity } from './entities/user-address.entity';
       provide: UpdateUserRepository,
       useClass: OrmUpdateUserRepository,
     },
+
+    {
+      provide: FindResetPasswordTokensRepository,
+      useClass: OrmFindResetPasswordTokenRepository,
+    },
+    {
+      provide: DeleteResetPasswordTokensRepository,
+      useClass: OrmDeleteResetPasswordTokensRepository,
+    },
+    {
+      provide: CreateResetPasswordTokensRepository,
+      useClass: OrmCreateResetPasswordTokensRepository,
+    },
   ],
   exports: [
     CreateUserRepository,
     FindUserRepository,
     RefreshTokensIdsRepository,
     UpdateUserRepository,
+    FindResetPasswordTokensRepository,
+    DeleteResetPasswordTokensRepository,
+    CreateResetPasswordTokensRepository,
   ],
 })
 export class OrmUsersPersistenceModule {}

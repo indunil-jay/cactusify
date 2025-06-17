@@ -6,7 +6,6 @@ import {
   HttpStatus,
   Post,
   Res,
-
 } from '@nestjs/common';
 import { SignUpDto } from './dto/sign-up.dto';
 import { AuthenticationFacade } from 'src/users/application/authentication.facade';
@@ -23,6 +22,8 @@ import { TfaGenerateCommand } from 'src/users/application/commands/tfa-generate.
 import { toFileStream } from 'qrcode';
 import { IActiveUser } from 'src/shared/application/interfaces/active-user.interface';
 import { ApiTags } from '@nestjs/swagger';
+import { ForgotPassWordDto } from './dto/forgot-password.dto';
+import { ForgotPasswordCommand } from 'src/users/application/commands/forgot-password.command';
 
 @ApiTags('authentication')
 @Auth(AuthType.None)
@@ -81,5 +82,13 @@ export class AuthenticationController {
     );
     response.type('png');
     return toFileStream(response, uri);
+  }
+
+  @HttpCode(HttpStatus.OK)
+  @Post('forgot-password')
+  forgotPassword(@Body() forgotPasswordDto: ForgotPassWordDto) {
+    return this.authenticationFacade.forgotPassword(
+      new ForgotPasswordCommand(forgotPasswordDto.email),
+    );
   }
 }

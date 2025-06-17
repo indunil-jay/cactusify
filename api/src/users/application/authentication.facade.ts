@@ -7,6 +7,8 @@ import { RefreshTokenCommand } from './commands/refresh-token.command';
 import { AuthTokensResponse } from './interfaces/auth-tokens-response.interface';
 import { GoogleSignCommand } from './commands/google-sign.command';
 import { TfaGenerateCommand } from './commands/tfa-generate.command';
+import { ForgotPasswordCommand } from './commands/forgot-password.command';
+import { AppResponse } from 'src/shared/application/types/app-response';
 
 @Injectable()
 export class AuthenticationFacade {
@@ -31,5 +33,11 @@ export class AuthenticationFacade {
 
   generateTFA(tfaGenerateCommand: TfaGenerateCommand): Promise<string> {
     return this.commandBus.execute(tfaGenerateCommand);
+  }
+
+  forgotPassword(
+    forgotPassswordCommand: ForgotPasswordCommand,
+  ): Promise<AppResponse> {
+    return this.commandBus.execute(forgotPassswordCommand);
   }
 }
