@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { FindResetPasswordTokensRepository } from 'src/users/application/ports/repositories/find-reset-password-tokens.repository';
+import { FindResetPasswordTokenRepository } from 'src/users/application/ports/repositories/find-reset-password-token.repository';
 import { ResetPasswordToken } from 'src/users/domain/reset-password-token';
 import { PasswordResetTokenEntity } from '../entities/reset-password.entity';
 import { Repository } from 'typeorm';
@@ -7,7 +7,7 @@ import { DatabaseExeception } from '../../exceptions/common.database.exception';
 import { ResetPasswordTokenMapper } from '../mappers/reset-password-token.mapper';
 
 export class OrmFindResetPasswordTokenRepository
-  implements FindResetPasswordTokensRepository
+  implements FindResetPasswordTokenRepository
 {
   constructor(
     @InjectRepository(PasswordResetTokenEntity)

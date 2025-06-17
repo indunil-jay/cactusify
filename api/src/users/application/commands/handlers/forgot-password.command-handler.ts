@@ -3,10 +3,10 @@ import { v4 as uuid } from 'uuid';
 import { ForgotPasswordCommand } from '../forgot-password.command';
 import { FindUserRepository } from '../../ports/repositories/find-user.repository';
 import { UserNotFoundException } from '../../exceptions/user-not-found.exception';
-import { FindResetPasswordTokensRepository } from '../../ports/repositories/find-reset-password-tokens.repository';
-import { DeleteResetPasswordTokensRepository } from '../../ports/repositories/delete-reset-password-tokens.repository';
+import { FindResetPasswordTokenRepository } from '../../ports/repositories/find-reset-password-token.repository';
+import { DeleteResetPasswordTokenRepository } from '../../ports/repositories/delete-reset-password-token.repository';
 import { ResetPasswordTokenFactory } from 'src/users/domain/factories/reset-password-token.factory';
-import { CreateResetPasswordTokensRepository } from '../../ports/repositories/create-reset-password-tokens.repository';
+import { CreateResetPasswordTokenRepository } from '../../ports/repositories/create-reset-password-token.repository';
 import { AppResponse } from 'src/shared/application/types/app-response';
 import {
   RESET_PASSWORD_EMAIL_SENT,
@@ -21,16 +21,16 @@ export class ForgotPasswordCommandHandler
   implements ICommandHandler<ForgotPasswordCommand>
 {
   constructor(
-    private readonly findUsersRepository: FindUserRepository,
-    private readonly findPasswordResetTokensRepository: FindResetPasswordTokensRepository,
-    private readonly deletePasswordResetTokensRepository: DeleteResetPasswordTokensRepository,
+    private readonly findUserRepository: FindUserRepository,
+    private readonly findPasswordResetTokenRepository: FindResetPasswordTokenRepository,
+    private readonly deletePasswordResetTokenRepository: DeleteResetPasswordTokenRepository,
     private readonly resetPasswordTokenFactory: ResetPasswordTokenFactory,
-    private readonly createPasswordResetTokenRepository: CreateResetPasswordTokensRepository,
+    private readonly createPasswordResetTokenRepository: CreateResetPasswordTokenRepository,
     private readonly eventBus: EventBus,
   ) {}
   async execute({ email }: ForgotPasswordCommand): Promise<AppResponse> {
     //check email exists
-    const user = await this.findUsersRepository.findOne({ email });
+    const user = await this.findUserRepository.findOne({ email });
 
     //if not send error
     if (!user) {
@@ -39,14 +39,14 @@ export class ForgotPasswordCommandHandler
 
     //check  if already token relsease and not expired
     const existintResetToken =
-      await this.findPasswordResetTokensRepository.findOne(user.id);
+      await this.findPasswordResetTokenRepository.findOne(user.id);
 
     if (existintResetToken) {
       if (existintResetToken.expiresAt > NOW) {
         return new AppResponse(RESET_PASSWORD_NOT_EXPIRED_MESSAGE);
       } else {
         //delete the old token
-        await this.deletePasswordResetTokensRepository.remove(
+        await this.deletePasswordResetTokenRepository.remove(
           existintResetToken.id,
         );
       }

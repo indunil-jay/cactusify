@@ -13,12 +13,12 @@ import { OrmUpdateUserRepository } from './repositories/orm-update-user.reposito
 import { UserProfilePictureEntity } from './entities/user-profile-picture.entity';
 import { UserAddressEntity } from './entities/user-address.entity';
 import { PasswordResetTokenEntity } from './entities/reset-password.entity';
-import { FindResetPasswordTokensRepository } from 'src/users/application/ports/repositories/find-reset-password-tokens.repository';
+import { FindResetPasswordTokenRepository } from 'src/users/application/ports/repositories/find-reset-password-token.repository';
 import { OrmFindResetPasswordTokenRepository } from './repositories/orm-find-reset-password.repository';
-import { DeleteResetPasswordTokensRepository } from 'src/users/application/ports/repositories/delete-reset-password-tokens.repository';
-import { OrmDeleteResetPasswordTokensRepository } from './repositories/orm-delete-reset-password-tokens.repository';
-import { CreateResetPasswordTokensRepository } from 'src/users/application/ports/repositories/create-reset-password-tokens.repository';
-import { OrmCreateResetPasswordTokensRepository } from './repositories/orm-create-reset-password-tokens.repository';
+import { DeleteResetPasswordTokenRepository } from 'src/users/application/ports/repositories/delete-reset-password-token.repository';
+import { OrmDeleteResetPasswordTokenRepository } from './repositories/orm-delete-reset-password-tokens.repository';
+import { CreateResetPasswordTokenRepository } from 'src/users/application/ports/repositories/create-reset-password-token.repository';
+import { OrmCreateResetPasswordTokenRepository } from './repositories/orm-create-reset-password-tokens.repository';
 
 @Module({
   imports: [
@@ -50,16 +50,16 @@ import { OrmCreateResetPasswordTokensRepository } from './repositories/orm-creat
     },
 
     {
-      provide: FindResetPasswordTokensRepository,
+      provide: FindResetPasswordTokenRepository,
       useClass: OrmFindResetPasswordTokenRepository,
     },
     {
-      provide: DeleteResetPasswordTokensRepository,
-      useClass: OrmDeleteResetPasswordTokensRepository,
+      provide: DeleteResetPasswordTokenRepository,
+      useClass: OrmDeleteResetPasswordTokenRepository,
     },
     {
-      provide: CreateResetPasswordTokensRepository,
-      useClass: OrmCreateResetPasswordTokensRepository,
+      provide: CreateResetPasswordTokenRepository,
+      useClass: OrmCreateResetPasswordTokenRepository,
     },
   ],
   exports: [
@@ -67,9 +67,9 @@ import { OrmCreateResetPasswordTokensRepository } from './repositories/orm-creat
     FindUserRepository,
     RefreshTokensIdsRepository,
     UpdateUserRepository,
-    FindResetPasswordTokensRepository,
-    DeleteResetPasswordTokensRepository,
-    CreateResetPasswordTokensRepository,
+    FindResetPasswordTokenRepository,
+    DeleteResetPasswordTokenRepository,
+    CreateResetPasswordTokenRepository,
   ],
 })
 export class OrmUsersPersistenceModule {}
