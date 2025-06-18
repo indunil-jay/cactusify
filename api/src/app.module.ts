@@ -7,6 +7,8 @@ import { ApplicationBootstrapOptions } from './common/interfaces/application-boo
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/application/shared.module';
 import { GoogleAuthenticationController } from './users/presenter/http/google-authentication.controller';
+import { ProductsModule } from './products/application/products.module';
+import { ProductsInfrastructureModule } from './products/infrastructure/products-infrasturcture.module';
 
 @Module({
   imports: [SharedModule],
@@ -21,6 +23,9 @@ export class AppModule {
         CoreModule.forRoot(options),
         UsersModule.withInfrastructure(
           UsersInfrastructureModule.use(options.driver),
+        ),
+        ProductsModule.withInfrastructure(
+          ProductsInfrastructureModule.use(options.driver),
         ),
       ],
     };
