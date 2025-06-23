@@ -4,11 +4,17 @@ import { SharedModule } from 'src/shared/application/shared.module';
 import { ProductFacade } from './product.facade';
 import { CreateProductCommandHandler } from './commands/handlers/create-product.command-handler';
 import { ProductFactory } from '../domain/factories/product.factory';
+import { ProductCreatedEventHandler } from './event-handlers/product-created.event-handler';
 
 @Module({
   imports: [SharedModule],
   controllers: [ProductsController],
-  providers: [ProductFacade, CreateProductCommandHandler,ProductFactory],
+  providers: [
+    ProductFacade,
+    CreateProductCommandHandler,
+    ProductFactory,
+    ProductCreatedEventHandler,
+  ],
   exports: [SharedModule],
 })
 export class ProductsModule {
