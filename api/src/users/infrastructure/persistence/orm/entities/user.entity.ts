@@ -4,6 +4,7 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
@@ -11,6 +12,8 @@ import {
 import { UserProfilePictureEntity } from './user-profile-picture.entity';
 import { UserAddressEntity } from './user-address.entity';
 import { PasswordResetTokenEntity } from './reset-password.entity';
+import { ProductEntity } from 'src/products/infrastructure/presistence/orm/entities/product.entity';
+
 
 @Entity('users')
 export class UserEntity {
@@ -80,4 +83,9 @@ export class UserEntity {
     cascade: ['remove'],
   })
   resetToken?: PasswordResetTokenEntity;
+
+  @OneToMany(() => ProductEntity, (product) => product.user, {
+    cascade: ['remove'],
+  })
+  products: ProductEntity[];
 }

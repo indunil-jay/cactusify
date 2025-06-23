@@ -1,7 +1,7 @@
-
 import {
   IsBoolean,
   IsEnum,
+  IsJSON,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -17,18 +17,13 @@ export class CreateProductDto {
   @IsNotEmpty()
   name: string;
 
-  @MaxLength(256)
-  @IsString()
-  @IsNotEmpty()
-  slug: string;
-
   @IsNumber()
   @IsPositive()
   price: number;
 
   @IsString()
+  @MaxLength(5000)
   @IsNotEmpty()
-  @MaxLength(2048)
   description: string;
 
   @IsNumber()
@@ -42,6 +37,15 @@ export class CreateProductDto {
   @IsNotEmpty()
   @IsBoolean()
   isActive: boolean;
+
+  @IsNotEmpty()
+  @IsPositive()
+  ageInMonths: number;
+
+  @MaxLength(300)
+  @IsString()
+  @IsOptional()
+  slug?: string;
 
   @MaxLength(256)
   @IsOptional()

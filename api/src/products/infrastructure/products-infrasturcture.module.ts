@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
-import { OrmProductsPersistenceModule } from './orm/orm-products-persistence.module';
-import { InMemoryProductsPersistenceModule } from './in-memory/in-memory-products-persistence.module';
+import { InMemoryProductsPersistenceModule } from './presistence/in-memory/in-memory-products-persistence.module';
+import { OrmProductsPersistenceModule } from './presistence/orm/orm-products-persistence.module';
 
 @Module({})
 export class ProductsInfrastructureModule {
@@ -8,6 +8,7 @@ export class ProductsInfrastructureModule {
     const persistenceModule =
       driver === 'orm'
         ? OrmProductsPersistenceModule
+
         : InMemoryProductsPersistenceModule;
 
     return {

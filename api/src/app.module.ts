@@ -21,9 +21,11 @@ export class AppModule {
       module: AppModule,
       imports: [
         CoreModule.forRoot(options),
+
         UsersModule.withInfrastructure(
           UsersInfrastructureModule.use(options.driver),
         ),
+        
         ProductsModule.withInfrastructure(
           ProductsInfrastructureModule.use(options.driver),
         ),
