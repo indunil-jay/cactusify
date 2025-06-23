@@ -16,7 +16,6 @@ export class ProductsController {
     @Body() createProductDto: CreateProductDto,
     @ActiveUser() user: IActiveUser,
   ) {
-    console.log({ user });
     return this.productFacade.create(
       new CreateProductCommand(
         user.sub,

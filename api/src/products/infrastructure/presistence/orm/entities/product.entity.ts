@@ -17,7 +17,7 @@ export class ProductEntity {
   @Column({ length: 256 })
   name: string;
 
-  @Column()
+  @Column({ type: 'numeric' })
   price: number;
 
   @Column({ length: 5000 })
@@ -35,13 +35,13 @@ export class ProductEntity {
   @Column()
   ageInMonths: number;
 
-  @Column({ nullable: true, length: 300 })
-  slug?: string;
+  @Column({ length: 300 })
+  slug: string;
 
   @Column({ nullable: true, length: 256 })
   scientificName?: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'numeric' })
   discountPrice?: number;
 
   @CreateDateColumn()

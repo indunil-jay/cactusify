@@ -9,7 +9,7 @@ export class CreateProductCommand {
     public readonly quantity: number,
     public readonly size: ProductSize,
     public readonly isActive: boolean,
-    public readonly agaInMonths: number,
+    public readonly ageInMonths: number,
     public readonly slug?: string,
     public readonly scientificName?: string,
     public readonly discountPrice?: number,

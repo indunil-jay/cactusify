@@ -9,7 +9,7 @@ export class Product {
   public isActive: boolean;
   public ageInMonths: number;
   public userId: string;
-  public slug?: string;
+  public slug: string;
   public scientificName?: string;
   public discountPrice?: number;
   constructor(public readonly id: string) {}
