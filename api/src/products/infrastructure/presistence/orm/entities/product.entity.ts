@@ -54,6 +54,8 @@ export class ProductEntity {
   userId: string;
 
   //Relations
-  @ManyToOne(() => UserEntity, (user) => user.products)
+  @ManyToOne(() => UserEntity, (user) => user.products, {
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 }

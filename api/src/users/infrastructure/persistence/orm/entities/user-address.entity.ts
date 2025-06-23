@@ -28,6 +28,8 @@ export class UserAddressEntity {
   zipCode: string;
 
   @JoinColumn()
-  @OneToOne(() => UserEntity, (user) => user.address)
+  @OneToOne(() => UserEntity, (user) => user.address, {
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 }

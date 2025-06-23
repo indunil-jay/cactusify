@@ -37,6 +37,8 @@ export class UserProfilePictureEntity {
   updatedAt: Date;
 
   @JoinColumn()
-  @OneToOne(() => UserEntity, (user) => user.profilePicture)
+  @OneToOne(() => UserEntity, (user) => user.profilePicture, {
+    onDelete: 'CASCADE',
+  })
   user: UserEntity;
 }

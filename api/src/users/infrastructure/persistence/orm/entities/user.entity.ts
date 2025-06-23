@@ -14,7 +14,6 @@ import { UserAddressEntity } from './user-address.entity';
 import { PasswordResetTokenEntity } from './reset-password.entity';
 import { ProductEntity } from 'src/products/infrastructure/presistence/orm/entities/product.entity';
 
-
 @Entity('users')
 export class UserEntity {
   @PrimaryColumn()
@@ -80,12 +79,12 @@ export class UserEntity {
   address: UserAddressEntity;
 
   @OneToOne(() => PasswordResetTokenEntity, (token) => token.user, {
-    cascade: ['remove'],
+    cascade: true,
   })
   resetToken?: PasswordResetTokenEntity;
 
   @OneToMany(() => ProductEntity, (product) => product.user, {
-    cascade: ['remove'],
+    cascade: true,
   })
   products: ProductEntity[];
 }

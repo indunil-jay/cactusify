@@ -26,7 +26,9 @@ export class PasswordResetTokenEntity {
   @UpdateDateColumn()
   createdAt: Date;
 
-  @OneToOne(() => UserEntity, (user) => user.resetToken)
+  @OneToOne(() => UserEntity, (user) => user.resetToken, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   user: UserEntity;
 }
