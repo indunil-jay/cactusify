@@ -2,6 +2,8 @@ import { Product } from 'src/products/domain/product';
 import { ProductEntity } from '../entities/product.entity';
 import { ProductSize as ProductSizeEnum } from 'src/products/application/enums/product-size.enum';
 import { ProductSize } from 'src/products/domain/value-objects/product-size.vobject';
+import { ProductImageEntity } from '../entities/product-image.entity';
+import { ProductImage } from 'src/products/domain/value-objects/product-image.vobject';
 
 export class ProductMapper {
   static toDomain(productEntity: ProductEntity): Product {
@@ -18,6 +20,15 @@ export class ProductMapper {
     product.slug = productEntity.slug;
     product.ageInMonths = productEntity.ageInMonths;
     product.userId = productEntity.userId;
+
+    product.images = productEntity.images.map(image=> {
+      const productImage  = new ProductImage(image.path)
+      productImage.mime = image.mime;
+      productImage.name = image.name;
+      productImage.size = image.size;
+      productImage.type = image.type;
+      return productImage;
+    });
 
     return product;
   }
@@ -37,6 +48,17 @@ export class ProductMapper {
     productEntity.slug = product.slug;
     productEntity.ageInMonths = product.ageInMonths;
     productEntity.userId = product.userId;
+
+    productEntity.images = product.images.map((image) => {
+      const productImage = new ProductImageEntity();
+      productImage.name = image.name;
+      productImage.mime = image.mime;
+      productImage.path = image.path;
+      productImage.size = image.size;
+      productImage.type = image.type;
+
+      return productImage;
+    });
 
     return productEntity;
   }

@@ -4,6 +4,7 @@ export class CreateProductCommand {
   constructor(
     public readonly userId: string,
     public readonly name: string,
+    public readonly images: Express.Multer.File[],
     public readonly price: number,
     public readonly description: string,
     public readonly quantity: number,

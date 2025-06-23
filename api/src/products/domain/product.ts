@@ -1,3 +1,4 @@
+import { ProductImage } from './value-objects/product-image.vobject';
 import { ProductSize } from './value-objects/product-size.vobject';
 
 export class Product {
@@ -12,5 +13,6 @@ export class Product {
   public slug: string;
   public scientificName?: string;
   public discountPrice?: number;
+  public images: ProductImage[];
   constructor(public readonly id: string) {}
 }

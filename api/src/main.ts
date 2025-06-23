@@ -14,6 +14,7 @@ async function bootstrap() {
       whitelist: true, // Remove unexpected properties
       forbidNonWhitelisted: true, // Reject requests with unexpected properties
       transform: true, // Convert payloads to DTO instances and types
+      transformOptions: { enableImplicitConversion: true },
     }),
   );
 
