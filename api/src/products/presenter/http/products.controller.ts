@@ -13,7 +13,9 @@ import { IActiveUser } from 'src/shared/application/interfaces/active-user.inter
 import { ProductFacade } from 'src/products/application/product.facade';
 import { CreateProductCommand } from 'src/products/application/commands/create-product.command';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('product')
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productFacade: ProductFacade) {}
