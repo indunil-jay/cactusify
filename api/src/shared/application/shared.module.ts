@@ -4,6 +4,7 @@ import { AuthenticationGuard } from './guards/authentication/authentication.guar
 import { AccessTokenGuard } from './guards/authentication/access-token.guard';
 import { RoleGuard } from './guards/authorization/role.guard';
 import { SharedInfrastructureModule } from '../infrastructure/shared-infrastructure.module';
+import { PaginationProvider } from '../infrastructure/pagination.provider';
 
 @Module({
   imports: [SharedInfrastructureModule],
@@ -23,6 +24,7 @@ import { SharedInfrastructureModule } from '../infrastructure/shared-infrastruct
       provide: APP_GUARD,
       useClass: RoleGuard,
     },
+    PaginationProvider,
   ],
   exports: [SharedInfrastructureModule],
 })

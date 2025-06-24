@@ -6,8 +6,10 @@ import { CreateCategoryCommandHandler } from './commands/handlers/create-categor
 import { GetCategoryByIdQueryHandler } from './queries/handlers/get-category-by-id.query-handler';
 import { DeleteCategoryCommandHandler } from './commands/handlers/delete-category.command-handler';
 import { GetCategoriesQueryHandler } from './queries/handlers/get-categories.query-handler';
+import { SharedModule } from 'src/shared/application/shared.module';
 
 @Module({
+  imports: [SharedModule],
   providers: [
     CategoryFacade,
     CategoryFactory,

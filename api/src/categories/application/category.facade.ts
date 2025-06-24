@@ -6,6 +6,7 @@ import { GetCategoryByIdQuery } from './queries/get-category-by-id.query';
 import { AppResponse } from 'src/shared/application/types/app-response';
 import { DeleteCategoryCommand } from './commands/delete-category.command';
 import { GetCategoriesQuery } from './queries/get-categories.query';
+import { PaginatedResponse } from 'src/shared/application/interfaces/paginated-response';
 
 @Injectable()
 export class CategoryFacade {
@@ -30,7 +31,7 @@ export class CategoryFacade {
 
   getAll(
     getCategoriesQuery: GetCategoriesQuery,
-  ): Promise<Category[] | Category> {
+  ): Promise<PaginatedResponse<Category | []>> {
     return this.queryBus.execute(getCategoriesQuery);
   }
 }

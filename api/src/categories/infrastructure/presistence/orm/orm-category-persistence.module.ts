@@ -10,6 +10,7 @@ import { OrmFindCategoryRepository } from './repositories/orm-find-category.repo
 import { DeleteCategoryRepository } from 'src/categories/application/ports/repositories/delete-category.repository';
 import { OrmDeleteCategoryRepository } from './repositories/orm-delete-category.repository';
 import { CategoryNestedRelationEntity } from './entities/category-nested.entity';
+import { SharedModule } from 'src/shared/application/shared.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { CategoryNestedRelationEntity } from './entities/category-nested.entity'
       UserEntity,
       CategoryNestedRelationEntity,
     ]),
+    SharedModule,
   ],
   providers: [
     {
@@ -39,6 +41,7 @@ import { CategoryNestedRelationEntity } from './entities/category-nested.entity'
     CreateCategoryRepository,
     FindCategoryRepository,
     DeleteCategoryRepository,
+    SharedModule,
   ],
 })
 export class OrmCategoryPresistenceModule {}

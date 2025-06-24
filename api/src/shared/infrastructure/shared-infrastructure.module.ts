@@ -12,6 +12,7 @@ import { MailTrapEmailService } from './services/mailTrap-email.service';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { join } from 'path';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
+import { PaginationProvider } from './pagination.provider';
 
 @Module({
   imports: [
@@ -37,7 +38,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
         },
         template: {
           dir: join(__dirname, `../presenter/templates`),
-          adapter: new EjsAdapter({inlineCssEnabled:true}),
+          adapter: new EjsAdapter({ inlineCssEnabled: true }),
 
           options: {
             strict: false,
@@ -49,6 +50,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
   providers: [
     { provide: UploadService, useClass: AwsUploadService },
     { provide: EmailService, useClass: MailTrapEmailService },
+    PaginationProvider,
   ],
   exports: [
     UploadService,
@@ -57,6 +59,7 @@ import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
     ConfigModule.forFeature(googleConfig),
     ConfigModule.forFeature(tfaConfig),
     EmailService,
+    PaginationProvider,
   ],
 })
 export class SharedInfrastructureModule {}
