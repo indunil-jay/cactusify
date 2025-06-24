@@ -39,7 +39,7 @@ export class CategoryEntity {
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  @ManyToMany(() => CategoryEntity, (category) => category.childrens)
+  @ManyToMany(() => CategoryEntity, (category) => category.children)
   @JoinTable({
     name: 'category_parents',
     joinColumn: { name: 'childId', referencedColumnName: 'id' },
@@ -47,8 +47,8 @@ export class CategoryEntity {
   })
   parents?: CategoryEntity[];
 
-  @OneToMany(() => CategoryEntity, (category) => category.parents)
-  childrens?: CategoryEntity[];
+  @ManyToMany(() => CategoryEntity, (category) => category.parents)
+  children?: CategoryEntity[];
 
   @ManyToMany(() => ProductEntity, (product) => product.categories)
   products: ProductEntity[];

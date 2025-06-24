@@ -23,6 +23,18 @@ export class CategoryMapper {
       });
     }
 
+    if (categoryEntity.children) {
+      category.children = categoryEntity.children.map((child) => {
+        const childCategory = new Category(child.id);
+        childCategory.name = child.name;
+        childCategory.description = child.description;
+        childCategory.slug = child.slug;
+        childCategory.userId = child.userId;
+        childCategory.createdAt = child.createdAt;
+        return childCategory;
+      });
+    }
+
     return category;
   }
 
@@ -45,6 +57,20 @@ export class CategoryMapper {
         return parentEntity;
       });
     }
+
+    if (category.children) {
+      categoryEntity.children = category.children.map((child) => {
+        const childEntity = new CategoryEntity();
+        childEntity.id = child.id;
+        childEntity.name = child.name;
+        childEntity.description = child.description;
+        childEntity.slug = child.slug;
+        childEntity.userId = child.userId;
+        childEntity.createdAt = child.createdAt!;
+        return childEntity;
+      });
+    }
+
 
     if (category.userId) {
       categoryEntity.userId = category.userId;

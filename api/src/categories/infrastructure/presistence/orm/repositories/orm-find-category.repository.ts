@@ -20,7 +20,7 @@ export class OrmFindCategoryRepository implements FindCategoryRepository {
     try {
       const categoryEntity = await this.categoryRepository.findOne({
         where: { ...options },
-        relations: ['parents'],
+        relations: ['parents','children'],
       });
 
       if (!categoryEntity) return null;
