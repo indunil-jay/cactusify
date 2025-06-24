@@ -4,12 +4,15 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { ProductImageEntity } from './product-image.entity';
+import { CategoryEntity } from 'src/categories/infrastructure/presistence/orm/entities/category.entity';
 
 @Entity('products')
 export class ProductEntity {
@@ -61,6 +64,16 @@ export class ProductEntity {
   })
   user: UserEntity;
 
-  @OneToMany(() => ProductImageEntity, productImage=>productImage.product, {cascade:true, eager:true})
+  @OneToMany(() => ProductImageEntity, (productImage) => productImage.product, {
+    cascade: true,
+    eager: true,
+  })
   images: ProductImageEntity[];
+
+  @ManyToMany(() => CategoryEntity, (category) => category.products, {
+    cascade: true,
+    eager: true,
+  })
+  @JoinTable()
+  categories: CategoryEntity[];
 }

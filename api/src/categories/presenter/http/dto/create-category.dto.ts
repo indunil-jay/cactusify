@@ -9,7 +9,12 @@ export class CreateCategoryDto {
   @MaxLength(1024)
   description: string;
 
+  @IsString()
   @IsOptional()
   @MaxLength(96)
-  slug: string;
+  slug?: string;
+
+  @IsOptional()
+  @IsString()
+  parentId?: string;
 }
