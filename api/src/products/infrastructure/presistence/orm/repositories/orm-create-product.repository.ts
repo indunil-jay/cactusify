@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { ProductEntity } from '../entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductMapper } from '../mappers/product.mapper';
-import { DatabaseExeception } from 'src/users/infrastructure/persistence/exceptions/common.database.exception';
+import { DatabaseExeception } from 'src/shared/infrastructure/exceptions/common.database.exception';
 
 @Injectable()
 export class OrmCreateProductRepository implements CreateProductRepository {

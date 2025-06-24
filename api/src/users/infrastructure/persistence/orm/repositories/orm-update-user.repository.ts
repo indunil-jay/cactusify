@@ -5,7 +5,7 @@ import { User } from 'src/users/domain/user';
 import { UserEntity } from '../entities/user.entity';
 import { Repository } from 'typeorm';
 import { UserMapper } from '../mappers/user.mapper';
-import { DatabaseExeception } from '../../exceptions/common.database.exception';
+import { DatabaseExeception } from '../../../../../shared/infrastructure/exceptions/common.database.exception';
 import { UserProfilePictureEntity } from '../entities/user-profile-picture.entity';
 import { UserAddressEntity } from '../entities/user-address.entity';
 

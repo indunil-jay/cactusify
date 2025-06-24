@@ -5,6 +5,8 @@ import { CategoryEntity } from './entities/category.entity';
 import { OrmCreateCategoryRepository } from './repositories/orm-create-category.repository';
 import { CreateCategoryRepository } from 'src/categories/application/ports/repositories/create-category.repository';
 import { UserEntity } from 'src/users/infrastructure/persistence/orm/entities/user.entity';
+import { FindCategoryRepository } from 'src/categories/application/ports/repositories/find-category.repository';
+import { OrmFindCategoryRepository } from './repositories/orm-find-category.repository';
 
 @Module({
   imports: [
@@ -15,8 +17,12 @@ import { UserEntity } from 'src/users/infrastructure/persistence/orm/entities/us
       provide: CreateCategoryRepository,
       useClass: OrmCreateCategoryRepository,
     },
+    {
+      provide: FindCategoryRepository,
+      useClass: OrmFindCategoryRepository,
+    },
   ],
 
-  exports: [CreateCategoryRepository],
+  exports: [CreateCategoryRepository, FindCategoryRepository],
 })
 export class OrmCategoryPresistenceModule {}

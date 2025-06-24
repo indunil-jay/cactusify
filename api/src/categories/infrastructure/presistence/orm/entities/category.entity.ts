@@ -2,6 +2,7 @@ import { ProductEntity } from 'src/products/infrastructure/presistence/orm/entit
 import { UserEntity } from 'src/users/infrastructure/persistence/orm/entities/user.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToMany,
@@ -27,6 +28,9 @@ export class CategoryEntity {
   @Column()
   userId: string;
 
+  @CreateDateColumn()
+  createdAt: Date;
+
   @ManyToOne(() => UserEntity, (user) => user.categories, {
     nullable: false,
     onDelete: 'SET NULL',
@@ -38,9 +42,7 @@ export class CategoryEntity {
   @Column({ nullable: true })
   parentId?: string;
 
-  @ManyToOne(() => CategoryEntity, (category) => category.children, {
-    eager: true,
-  })
+  @ManyToOne(() => CategoryEntity, (category) => category.children)
   // This makes parentId the FK column
   @JoinColumn({ name: 'parentId' })
   parent?: CategoryEntity;

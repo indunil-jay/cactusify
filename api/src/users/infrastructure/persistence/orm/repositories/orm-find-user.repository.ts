@@ -8,7 +8,7 @@ import {
 import { User } from 'src/users/domain/user';
 import { UserEntity } from '../entities/user.entity';
 import { UserMapper } from '../mappers/user.mapper';
-import { DatabaseExeception } from '../../exceptions/common.database.exception';
+import { DatabaseExeception } from '../../../../../shared/infrastructure/exceptions/common.database.exception';
 
 @Injectable()
 export class OrmFindUserRepository implements FindUserRepository {

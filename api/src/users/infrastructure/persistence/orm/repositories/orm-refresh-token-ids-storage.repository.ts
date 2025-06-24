@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RefreshTokensIdsRepository } from 'src/users/application/ports/repositories/refresh-token-ids.repository';
 import { RefreshTokenIdsEntity } from '../entities/refresh-token-ids.entity';
-import { DatabaseExeception } from '../../exceptions/common.database.exception';
+import { DatabaseExeception } from '../../../../../shared/infrastructure/exceptions/common.database.exception';
 
 @Injectable()
 export class OrmRefreshTokensIdsRepository

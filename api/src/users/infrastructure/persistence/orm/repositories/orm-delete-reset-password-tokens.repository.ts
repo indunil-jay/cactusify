@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResetPasswordTokenRepository } from 'src/users/application/ports/repositories/delete-reset-password-token.repository';
 import { PasswordResetTokenEntity } from '../entities/reset-password.entity';
 import { Repository } from 'typeorm';
-import { DatabaseExeception } from '../../exceptions/common.database.exception';
+import { DatabaseExeception } from '../../../../../shared/infrastructure/exceptions/common.database.exception';
 
 @Injectable()
 export class OrmDeleteResetPasswordTokenRepository
