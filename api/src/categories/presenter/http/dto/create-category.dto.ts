@@ -1,4 +1,4 @@
-import { IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsArray, IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class CreateCategoryDto {
   @IsString()
@@ -15,6 +15,7 @@ export class CreateCategoryDto {
   slug?: string;
 
   @IsOptional()
-  @IsString()
-  parentId?: string;
+  @IsArray()
+  @IsString({ each: true })
+  parentIds?: string[];
 }

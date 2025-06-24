@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -38,17 +39,16 @@ export class CategoryEntity {
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  // Self-referencing parent category
-  @Column({ nullable: true })
-  parentId?: string;
+  @ManyToMany(() => CategoryEntity, (category) => category.childrens)
+  @JoinTable({
+    name: 'category_parents',
+    joinColumn: { name: 'childId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'parentId', referencedColumnName: 'id' },
+  })
+  parents?: CategoryEntity[];
 
-  @ManyToOne(() => CategoryEntity, (category) => category.children)
-  // This makes parentId the FK column
-  @JoinColumn({ name: 'parentId' })
-  parent?: CategoryEntity;
-
-  @OneToMany(() => CategoryEntity, (category) => category.parent)
-  children: CategoryEntity[];
+  @OneToMany(() => CategoryEntity, (category) => category.parents)
+  childrens?: CategoryEntity[];
 
   @ManyToMany(() => ProductEntity, (product) => product.categories)
   products: ProductEntity[];

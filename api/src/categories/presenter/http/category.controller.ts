@@ -25,7 +25,7 @@ export class CategoryController {
         createCategoryDto.name,
         createCategoryDto.description,
         createCategoryDto.slug,
-        createCategoryDto.parentId,
+        createCategoryDto.parentIds,
       ),
     );
   }

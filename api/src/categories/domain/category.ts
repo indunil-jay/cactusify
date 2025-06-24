@@ -4,10 +4,10 @@ export class Category {
   public description: string;
   public userId: string;
   public createdAt?: Date;
-  public parent?: Category;
+  public parents?: Category[];
   constructor(public readonly id: string) {}
 
   public isSubcategory(): boolean {
-    return !!this.parent;
+    return !!this.parents;
   }
 }

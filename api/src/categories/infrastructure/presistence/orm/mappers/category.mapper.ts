@@ -10,15 +10,17 @@ export class CategoryMapper {
     category.userId = categoryEntity.userId;
     category.createdAt = categoryEntity.createdAt;
 
-    if (categoryEntity.parent) {
-      const parentEntity = new Category(categoryEntity.parent.id);
+    if (categoryEntity.parents) {
+      category.parents = categoryEntity.parents.map((parent) => {
+        const parentEntity = new Category(parent.id);
 
-      parentEntity.name = categoryEntity.parent.name;
-      parentEntity.description = categoryEntity.parent.description;
-      parentEntity.slug = categoryEntity.parent.slug;
-      parentEntity.userId = categoryEntity.parent.userId;
-      parentEntity.createdAt = categoryEntity.parent.createdAt;
-      category.parent = parentEntity;
+        parentEntity.name = parent.name;
+        parentEntity.description = parent.description;
+        parentEntity.slug = parent.slug;
+        parentEntity.userId = parent.userId;
+        parentEntity.createdAt = parent.createdAt;
+        return parentEntity;
+      });
     }
 
     return category;
@@ -31,16 +33,17 @@ export class CategoryMapper {
     categoryEntity.description = category.description;
     categoryEntity.slug = category.slug;
 
-    if (category.parent) {
-      const parentEntity = new CategoryEntity();
-      parentEntity.id = category.parent.id;
-      parentEntity.name = category.parent.name;
-      parentEntity.description = category.parent.description;
-      parentEntity.slug = category.parent.slug;
-      parentEntity.userId = category.parent.userId;
-      parentEntity.createdAt = category.parent.createdAt!;
-
-      categoryEntity.parent = parentEntity;
+    if (category.parents) {
+      categoryEntity.parents = category.parents.map((parent) => {
+        const parentEntity = new CategoryEntity();
+        parentEntity.id = parent.id;
+        parentEntity.name = parent.name;
+        parentEntity.description = parent.description;
+        parentEntity.slug = parent.slug;
+        parentEntity.userId = parent.userId;
+        parentEntity.createdAt = parent.createdAt!;
+        return parentEntity;
+      });
     }
 
     if (category.userId) {

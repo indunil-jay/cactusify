@@ -20,23 +20,27 @@ export class CreateCategoryCommandHandler
     description,
     slug,
     userId,
-    parentId,
+    parentIds,
   }: CreateCategoryCommand): Promise<any> {
-    let parentCategory: Category | undefined = undefined;
-    if (parentId) {
-      const existingParent = await this.findCategoryRepository.findOne({
-        id: parentId,
-      });
-
-      parentCategory = existingParent ? existingParent : undefined;
-    }
     const category = this.categoryFactory.create(
       name,
       description,
       userId,
       slug,
     );
-    category.parent = parentCategory;
+
+    if (parentIds) {
+      const categoryParents: Category[] = [];
+      for (const parentId of parentIds) {
+        const parent = await this.findCategoryRepository.findOne({
+          id: parentId,
+        });
+        if (parent) {
+          categoryParents.push(parent);
+        }
+      }
+      category.parents = categoryParents;
+    }
 
     const newCategory = await this.createCategoryRepository.save(category);
     return newCategory;

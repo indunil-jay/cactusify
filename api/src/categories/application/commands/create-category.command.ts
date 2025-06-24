@@ -4,6 +4,6 @@ export class CreateCategoryCommand {
     public readonly name: string,
     public readonly description: string,
     public readonly slug?: string,
-    public readonly parentId?: string,
+    public readonly parentIds?: string[],
   ) {}
 }
