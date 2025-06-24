@@ -20,6 +20,7 @@ import { DeleteCategoryCommand } from 'src/categories/application/commands/delet
 import { GetCategoriesQueryDto } from './dto/get-categories-query.dto';
 import { GetCategoriesQuery } from 'src/categories/application/queries/get-categories.query';
 import { Request } from 'express';
+import { GetCategoryByIdQuery } from 'src/categories/application/queries/get-category-by-id.query';
 
 @ApiTags('category')
 @Controller('categories')
@@ -53,6 +54,12 @@ export class CategoryController {
   getAll(@Query() { limit, page }: GetCategoriesQueryDto, @Req() req: Request) {
     const baseUrl = `${req.protocol}://${req.get('host')}`;
     const basePath = req.baseUrl + req.path;
-    return this.categoryFacade.getAll(new GetCategoriesQuery(page, limit,baseUrl,basePath));
+    return this.categoryFacade.getAll(
+      new GetCategoriesQuery(page, limit, baseUrl, basePath),
+    );
+  }
+  @Get(':id')
+  getOne(@Param('id') id: string) {
+    return this.categoryFacade.getOne(new GetCategoryByIdQuery(id));
   }
 }
