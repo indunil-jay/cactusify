@@ -54,7 +54,7 @@ export class CategoryMapper {
     // Map parents into parentRelations (join entity)
     if (category.parents && category.parents.length > 0) {
       categoryEntity.parents = category.parents.map((parent) => {
-        console.log({ parent });
+  
         const relation = new CategoryNestedRelationEntity();
         relation.parent = { id: parent.id } as CategoryEntity;
         relation.child = categoryEntity;

@@ -5,6 +5,7 @@ import { Category } from '../domain/category';
 import { GetCategoryByIdQuery } from './queries/get-category-by-id.query';
 import { AppResponse } from 'src/shared/application/types/app-response';
 import { DeleteCategoryCommand } from './commands/delete-category.command';
+import { GetCategoriesQuery } from './queries/get-categories.query';
 
 @Injectable()
 export class CategoryFacade {
@@ -25,5 +26,11 @@ export class CategoryFacade {
 
   remove(deleteCategoryCommand: DeleteCategoryCommand): Promise<void> {
     return this.commandBus.execute(deleteCategoryCommand);
+  }
+
+  getAll(
+    getCategoriesQuery: GetCategoriesQuery,
+  ): Promise<Category[] | Category> {
+    return this.queryBus.execute(getCategoriesQuery);
   }
 }

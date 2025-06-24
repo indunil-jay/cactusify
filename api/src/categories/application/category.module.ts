@@ -5,6 +5,7 @@ import { CategoryFactory } from '../domain/factories/category.factory';
 import { CreateCategoryCommandHandler } from './commands/handlers/create-category.command-handler';
 import { GetCategoryByIdQueryHandler } from './queries/handlers/get-category-by-id.query-handler';
 import { DeleteCategoryCommandHandler } from './commands/handlers/delete-category.command-handler';
+import { GetCategoriesQueryHandler } from './queries/handlers/get-categories.query-handler';
 
 @Module({
   providers: [
@@ -12,7 +13,8 @@ import { DeleteCategoryCommandHandler } from './commands/handlers/delete-categor
     CategoryFactory,
     CreateCategoryCommandHandler,
     GetCategoryByIdQueryHandler,
-    DeleteCategoryCommandHandler
+    DeleteCategoryCommandHandler,
+    GetCategoriesQueryHandler,
   ],
   controllers: [CategoryController],
 })

@@ -5,4 +5,5 @@ export type CategoryFindOptions = ExactlyOne<Pick<Category, 'id'>>;
 
 export abstract class FindCategoryRepository {
   abstract findOne(options: CategoryFindOptions): Promise<Category | null>;
+  abstract findAll(page:number, limit:number): Promise<Category[] | []>;
 }

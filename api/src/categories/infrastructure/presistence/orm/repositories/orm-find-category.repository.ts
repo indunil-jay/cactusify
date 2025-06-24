@@ -16,6 +16,24 @@ export class OrmFindCategoryRepository implements FindCategoryRepository {
     @InjectRepository(CategoryEntity)
     private readonly categoryRepository: Repository<CategoryEntity>,
   ) {}
+
+  async findAll(page: number, limit: number): Promise<Category[] | []> {
+    try {
+      const categoryEntities = await this.categoryRepository.find({
+        skip: (page - 1) * limit,
+        take: limit,
+        relations: ['parents', 'parents.parent', 'children', 'children.child'],
+      });
+      if (categoryEntities.length === 0) return [];
+      return categoryEntities.map((categoryEntity) =>
+        CategoryMapper.toDomain(categoryEntity),
+      );
+    } catch (error) {
+      console.log(error);
+      throw new DatabaseExeception(OrmFindCategoryRepository, error);
+    }
+  }
+
   async findOne(options: CategoryFindOptions): Promise<Category | null> {
     try {
       const categoryEntity = await this.categoryRepository.findOne({
