@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Req,
@@ -21,6 +22,8 @@ import { GetCategoriesQueryDto } from './dto/get-categories-query.dto';
 import { GetCategoriesQuery } from 'src/categories/application/queries/get-categories.query';
 import { Request } from 'express';
 import { GetCategoryByIdQuery } from 'src/categories/application/queries/get-category-by-id.query';
+import { UpdateCategoryDto } from './dto/update-category.dto';
+import { UpdateCategoryCommand } from 'src/categories/application/commands/update-category.command';
 
 @ApiTags('category')
 @Controller('categories')
@@ -48,6 +51,12 @@ export class CategoryController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoryFacade.remove(new DeleteCategoryCommand(id));
+  }
+
+  @Roles(Role.Admin)
+  @Patch(':id')
+  update(@Param('id') categoryId:string ,@Body() updateCategoryDto: UpdateCategoryDto) {
+    return this.categoryFacade.update(new UpdateCategoryCommand(categoryId,updateCategoryDto.name,updateCategoryDto.description,updateCategoryDto.slug,updateCategoryDto.parentIds));
   }
 
   @Get()

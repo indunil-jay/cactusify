@@ -7,6 +7,7 @@ import { AppResponse } from 'src/shared/application/types/app-response';
 import { DeleteCategoryCommand } from './commands/delete-category.command';
 import { GetCategoriesQuery } from './queries/get-categories.query';
 import { PaginatedResponse } from 'src/shared/application/interfaces/paginated-response';
+import { UpdateCategoryCommand } from './commands/update-category.command';
 
 @Injectable()
 export class CategoryFacade {
@@ -27,6 +28,9 @@ export class CategoryFacade {
 
   remove(deleteCategoryCommand: DeleteCategoryCommand): Promise<void> {
     return this.commandBus.execute(deleteCategoryCommand);
+  }
+  update(updateCategoryCommand: UpdateCategoryCommand): Promise<Category> {
+    return this.commandBus.execute(updateCategoryCommand);
   }
 
   getAll(

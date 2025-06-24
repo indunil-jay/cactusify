@@ -11,6 +11,8 @@ import { DeleteCategoryRepository } from 'src/categories/application/ports/repos
 import { OrmDeleteCategoryRepository } from './repositories/orm-delete-category.repository';
 import { CategoryNestedRelationEntity } from './entities/category-nested.entity';
 import { SharedModule } from 'src/shared/application/shared.module';
+import { UpdateCategoryRepository } from 'src/categories/application/ports/repositories/update-category.repository';
+import { OrmUpdateCategoryRepository } from './repositories/orm-update-category.repository';
 
 @Module({
   imports: [
@@ -35,12 +37,17 @@ import { SharedModule } from 'src/shared/application/shared.module';
       provide: DeleteCategoryRepository,
       useClass: OrmDeleteCategoryRepository,
     },
+    {
+      provide: UpdateCategoryRepository,
+      useClass: OrmUpdateCategoryRepository,
+    },
   ],
 
   exports: [
     CreateCategoryRepository,
     FindCategoryRepository,
     DeleteCategoryRepository,
+    UpdateCategoryRepository,
     SharedModule,
   ],
 })
