@@ -7,6 +7,7 @@ import { GetCategoryByIdQueryHandler } from './queries/handlers/get-category-by-
 import { DeleteCategoryCommandHandler } from './commands/handlers/delete-category.command-handler';
 import { GetCategoriesQueryHandler } from './queries/handlers/get-categories.query-handler';
 import { SharedModule } from 'src/shared/application/shared.module';
+import { CategoryCreatedEventHandler } from './event-handlers/category-created.event-handler';
 
 @Module({
   imports: [SharedModule],
@@ -17,6 +18,7 @@ import { SharedModule } from 'src/shared/application/shared.module';
     GetCategoryByIdQueryHandler,
     DeleteCategoryCommandHandler,
     GetCategoriesQueryHandler,
+    CategoryCreatedEventHandler
   ],
   controllers: [CategoryController],
 })

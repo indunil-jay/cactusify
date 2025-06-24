@@ -1,9 +1,10 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
+import { CommandHandler, EventBus, ICommandHandler } from '@nestjs/cqrs';
 import { CreateCategoryCommand } from '../create-category.command';
 import { CategoryFactory } from 'src/categories/domain/factories/category.factory';
 import { CreateCategoryRepository } from '../../ports/repositories/create-category.repository';
 import { FindCategoryRepository } from '../../ports/repositories/find-category.repository';
 import { Category } from 'src/categories/domain/category';
+import { CategoryCreatedEvent } from 'src/categories/domain/events/category-created.event';
 
 @CommandHandler(CreateCategoryCommand)
 export class CreateCategoryCommandHandler
@@ -13,6 +14,7 @@ export class CreateCategoryCommandHandler
     private readonly categoryFactory: CategoryFactory,
     private readonly createCategoryRepository: CreateCategoryRepository,
     private readonly findCategoryRepository: FindCategoryRepository,
+    private readonly eventBus: EventBus,
   ) {}
 
   async execute({
@@ -43,6 +45,7 @@ export class CreateCategoryCommandHandler
     }
 
     const newCategory = await this.createCategoryRepository.save(category);
+    this.eventBus.publish(new CategoryCreatedEvent(newCategory));
     return newCategory;
   }
 }
