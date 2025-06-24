@@ -1,5 +1,6 @@
 import { Category } from 'src/categories/domain/category';
 import { CategoryEntity } from '../entities/category.entity';
+import { CategoryNestedRelationEntity } from '../entities/category-nested.entity';
 
 export class CategoryMapper {
   static toDomain(categoryEntity: CategoryEntity): Category {
@@ -10,21 +11,25 @@ export class CategoryMapper {
     category.userId = categoryEntity.userId;
     category.createdAt = categoryEntity.createdAt;
 
+    // Map parents using parentRelations
     if (categoryEntity.parents) {
-      category.parents = categoryEntity.parents.map((parent) => {
-        const parentEntity = new Category(parent.id);
+      category.parents = categoryEntity.parents.map((rel) => {
+        const parent = rel.parent;
 
-        parentEntity.name = parent.name;
-        parentEntity.description = parent.description;
-        parentEntity.slug = parent.slug;
-        parentEntity.userId = parent.userId;
-        parentEntity.createdAt = parent.createdAt;
-        return parentEntity;
+        const parentCategory = new Category(parent.id);
+        parentCategory.name = parent.name;
+        parentCategory.description = parent.description;
+        parentCategory.slug = parent.slug;
+        parentCategory.userId = parent.userId;
+        parentCategory.createdAt = parent.createdAt;
+        return parentCategory;
       });
     }
 
+    // Map children using childRelations
     if (categoryEntity.children) {
-      category.children = categoryEntity.children.map((child) => {
+      category.children = categoryEntity.children.map((rel) => {
+        const child = rel.child;
         const childCategory = new Category(child.id);
         childCategory.name = child.name;
         childCategory.description = child.description;
@@ -44,36 +49,28 @@ export class CategoryMapper {
     categoryEntity.name = category.name;
     categoryEntity.description = category.description;
     categoryEntity.slug = category.slug;
+    categoryEntity.userId = category.userId;
 
-    if (category.parents) {
+    // Map parents into parentRelations (join entity)
+    if (category.parents && category.parents.length > 0) {
       categoryEntity.parents = category.parents.map((parent) => {
-        const parentEntity = new CategoryEntity();
-        parentEntity.id = parent.id;
-        parentEntity.name = parent.name;
-        parentEntity.description = parent.description;
-        parentEntity.slug = parent.slug;
-        parentEntity.userId = parent.userId;
-        parentEntity.createdAt = parent.createdAt!;
-        return parentEntity;
+        console.log({ parent });
+        const relation = new CategoryNestedRelationEntity();
+        relation.parent = { id: parent.id } as CategoryEntity;
+        relation.child = categoryEntity;
+        return relation;
       });
     }
 
-    if (category.children) {
+    // Map children into childRelations (join entity)
+    if (category.children && category.children.length > 0) {
       categoryEntity.children = category.children.map((child) => {
-        const childEntity = new CategoryEntity();
-        childEntity.id = child.id;
-        childEntity.name = child.name;
-        childEntity.description = child.description;
-        childEntity.slug = child.slug;
-        childEntity.userId = child.userId;
-        childEntity.createdAt = child.createdAt!;
-        return childEntity;
+
+        const relation = new CategoryNestedRelationEntity();
+        relation.child = { id: child.id } as CategoryEntity;
+        relation.parent = categoryEntity;
+        return relation;
       });
-    }
-
-
-    if (category.userId) {
-      categoryEntity.userId = category.userId;
     }
 
     return categoryEntity;

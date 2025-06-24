@@ -7,10 +7,18 @@ import { CreateCategoryRepository } from 'src/categories/application/ports/repos
 import { UserEntity } from 'src/users/infrastructure/persistence/orm/entities/user.entity';
 import { FindCategoryRepository } from 'src/categories/application/ports/repositories/find-category.repository';
 import { OrmFindCategoryRepository } from './repositories/orm-find-category.repository';
+import { DeleteCategoryRepository } from 'src/categories/application/ports/repositories/delete-category.repository';
+import { OrmDeleteCategoryRepository } from './repositories/orm-delete-category.repository';
+import { CategoryNestedRelationEntity } from './entities/category-nested.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ProductEntity, CategoryEntity, UserEntity]),
+    TypeOrmModule.forFeature([
+      ProductEntity,
+      CategoryEntity,
+      UserEntity,
+      CategoryNestedRelationEntity,
+    ]),
   ],
   providers: [
     {
@@ -21,8 +29,16 @@ import { OrmFindCategoryRepository } from './repositories/orm-find-category.repo
       provide: FindCategoryRepository,
       useClass: OrmFindCategoryRepository,
     },
+    {
+      provide: DeleteCategoryRepository,
+      useClass: OrmDeleteCategoryRepository,
+    },
   ],
 
-  exports: [CreateCategoryRepository, FindCategoryRepository],
+  exports: [
+    CreateCategoryRepository,
+    FindCategoryRepository,
+    DeleteCategoryRepository,
+  ],
 })
 export class OrmCategoryPresistenceModule {}

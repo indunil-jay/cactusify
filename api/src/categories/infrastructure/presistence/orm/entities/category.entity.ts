@@ -11,6 +11,7 @@ import {
   OneToMany,
   PrimaryColumn,
 } from 'typeorm';
+import { CategoryNestedRelationEntity, } from './category-nested.entity';
 
 @Entity('categories')
 export class CategoryEntity {
@@ -39,16 +40,25 @@ export class CategoryEntity {
   @JoinColumn({ name: 'userId' })
   user: UserEntity;
 
-  @ManyToMany(() => CategoryEntity, (category) => category.children)
-  @JoinTable({
-    name: 'category_parents',
-    joinColumn: { name: 'childId', referencedColumnName: 'id' },
-    inverseJoinColumn: { name: 'parentId', referencedColumnName: 'id' },
-  })
-  parents?: CategoryEntity[];
+  @OneToMany(
+    () => CategoryNestedRelationEntity,
+    (categoryParent) => categoryParent.child,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  parents: CategoryNestedRelationEntity[];
 
-  @ManyToMany(() => CategoryEntity, (category) => category.parents)
-  children?: CategoryEntity[];
+  @OneToMany(
+    () => CategoryNestedRelationEntity,
+    (categoryParent) => categoryParent.parent,
+    {
+      cascade: true,
+      eager: true,
+    },
+  )
+  children: CategoryNestedRelationEntity[];
 
   @ManyToMany(() => ProductEntity, (product) => product.categories)
   products: ProductEntity[];

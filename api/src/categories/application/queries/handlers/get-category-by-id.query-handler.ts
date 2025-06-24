@@ -18,7 +18,7 @@ export class GetCategoryByIdQueryHandler
     });
 
     if (!category) {
-      return new AppResponse(CATEGORY_NOT_FOUND_MESSAGE)
+      return new AppResponse(CATEGORY_NOT_FOUND_MESSAGE);
     }
 
     return category;

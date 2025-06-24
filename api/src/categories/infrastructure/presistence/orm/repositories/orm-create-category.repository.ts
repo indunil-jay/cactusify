@@ -20,6 +20,7 @@ export class OrmCreateCategoryRepository implements CreateCategoryRepository {
         await this.categoriesRepository.save(persistenceModel);
       return CategoryMapper.toDomain(categoryEntity);
     } catch (error) {
+      console.log(error)
       throw new DatabaseExeception(OrmCreateCategoryRepository, error);
     }
   }
