@@ -1,4 +1,5 @@
 import { ProductEntity } from 'src/products/infrastructure/presistence/orm/entities/product.entity';
+import { UserEntity } from 'src/users/infrastructure/persistence/orm/entities/user.entity';
 import {
   Column,
   Entity,
@@ -14,20 +15,32 @@ export class CategoryEntity {
   @PrimaryColumn()
   id: string;
 
-  @Column({ length: 64 })
+  @Column({ length: 64, unique: true })
   name: string;
 
   @Column({ length: 1024 })
   description: string;
 
-  @Column({ length: 96 })
+  @Column({ length: 96, unique: true })
   slug: string;
+
+  @Column()
+  userId: string;
+
+  @ManyToOne(() => UserEntity, (user) => user.categories, {
+    nullable: false,
+    onDelete: 'SET NULL',
+  })
+  @JoinColumn({ name: 'userId' })
+  user: UserEntity;
 
   // Self-referencing parent category
   @Column({ nullable: true })
   parentId?: string;
 
-  @ManyToOne(() => CategoryEntity, (category) => category.children)
+  @ManyToOne(() => CategoryEntity, (category) => category.children, {
+    eager: true,
+  })
   // This makes parentId the FK column
   @JoinColumn({ name: 'parentId' })
   parent?: CategoryEntity;
@@ -36,5 +49,5 @@ export class CategoryEntity {
   children: CategoryEntity[];
 
   @ManyToMany(() => ProductEntity, (product) => product.categories)
-  proudcts: ProductEntity[];
+  products: ProductEntity[];
 }

@@ -1,5 +1,6 @@
 import { Category } from 'src/categories/domain/category';
 import { CategoryEntity } from '../entities/category.entity';
+import { UserEntity } from 'src/users/infrastructure/persistence/orm/entities/user.entity';
 
 export class CategoryMapper {
   static toDomain(categoryEntity: CategoryEntity): Category {
@@ -7,6 +8,7 @@ export class CategoryMapper {
     category.name = categoryEntity.name;
     category.description = categoryEntity.description;
     category.slug = categoryEntity.slug;
+    category.userId = categoryEntity.userId;
 
     if (categoryEntity.parent) {
       const parentEntity = new Category(categoryEntity.parent.id);
@@ -31,6 +33,12 @@ export class CategoryMapper {
       const parentEntity = new CategoryEntity();
       parentEntity.id = category.parent.id;
       categoryEntity.parent = parentEntity;
+    }
+    if (category.userId) {
+      categoryEntity.userId = category.userId;
+      const user = new UserEntity();
+      user.id = category.userId;
+      categoryEntity.user = user;
     }
 
     return categoryEntity;

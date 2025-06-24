@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import { Role } from 'src/shared/application/enums/role.enum';
 import {
   Column,
@@ -13,6 +12,7 @@ import { UserProfilePictureEntity } from './user-profile-picture.entity';
 import { UserAddressEntity } from './user-address.entity';
 import { PasswordResetTokenEntity } from './reset-password.entity';
 import { ProductEntity } from 'src/products/infrastructure/presistence/orm/entities/product.entity';
+import { CategoryEntity } from 'src/categories/infrastructure/presistence/orm/entities/category.entity';
 
 @Entity('users')
 export class UserEntity {
@@ -87,4 +87,7 @@ export class UserEntity {
     cascade: true,
   })
   products: ProductEntity[];
+
+  @OneToMany(() => CategoryEntity, (category) => category.user)
+  categories: CategoryEntity[];
 }

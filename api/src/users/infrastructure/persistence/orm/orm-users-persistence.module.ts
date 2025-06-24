@@ -20,6 +20,7 @@ import { OrmDeleteResetPasswordTokenRepository } from './repositories/orm-delete
 import { CreateResetPasswordTokenRepository } from 'src/users/application/ports/repositories/create-reset-password-token.repository';
 import { OrmCreateResetPasswordTokenRepository } from './repositories/orm-create-reset-password-tokens.repository';
 import { ProductEntity } from 'src/products/infrastructure/presistence/orm/entities/product.entity';
+import { CategoryEntity } from 'src/categories/infrastructure/presistence/orm/entities/category.entity';
 
 @Module({
   imports: [
@@ -29,7 +30,8 @@ import { ProductEntity } from 'src/products/infrastructure/presistence/orm/entit
       UserProfilePictureEntity,
       UserAddressEntity,
       PasswordResetTokenEntity,
-      ProductEntity
+      ProductEntity,
+      CategoryEntity,
     ]),
   ],
   providers: [

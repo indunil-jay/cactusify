@@ -5,9 +5,17 @@ import { UserEntity } from 'src/users/infrastructure/persistence/orm/entities/us
 import { CreateProductRepository } from 'src/products/application/ports/repositories/create-product.repository';
 import { OrmCreateProductRepository } from './repositories/orm-create-product.repository';
 import { ProductImageEntity } from './entities/product-image.entity';
+import { CategoryEntity } from 'src/categories/infrastructure/presistence/orm/entities/category.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ProductEntity, UserEntity,ProductImageEntity])],
+  imports: [
+    TypeOrmModule.forFeature([
+      ProductEntity,
+      UserEntity,
+      ProductImageEntity,
+      CategoryEntity,
+    ]),
+  ],
   providers: [
     {
       provide: CreateProductRepository,
