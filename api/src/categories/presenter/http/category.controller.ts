@@ -37,7 +37,7 @@ export class CategoryController {
     return this.categoryFacade.getOne(new GetCategoryByIdQuery(id));
   }
 
-
+  @Roles(Role.Admin)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.categoryFacade.remove(new DeleteCategoryCommand(id));

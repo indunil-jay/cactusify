@@ -20,18 +20,12 @@ export class OrmFindCategoryRepository implements FindCategoryRepository {
     try {
       const categoryEntity = await this.categoryRepository.findOne({
         where: { ...options },
-        relations: [
-          'parents',
-          'parents.parent',
-          'children',
-          'children.child',
-        ],
+        relations: ['parents', 'parents.parent', 'children', 'children.child'],
       });
-      console.log(categoryEntity);
+
       if (!categoryEntity) return null;
       return CategoryMapper.toDomain(categoryEntity);
     } catch (error) {
-      console.log(error);
       throw new DatabaseExeception(OrmFindCategoryRepository, error);
     }
   }
